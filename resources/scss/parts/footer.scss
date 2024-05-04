@@ -1,0 +1,36 @@
+.footer{
+    &-login{
+        &__wrapper{
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #161616;
+            margin: 0;
+        }
+        &__credits{
+            ul,li,a{
+                color: #cbcbcb;
+                text-decoration: none;
+            }
+            ul{
+                list-style: none;
+                padding-inline-start: 0;
+            }
+            
+        }
+    }
+    &__content{
+        margin: 0 auto;
+        width: 100%;
+        max-width: 500px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid black;
+        padding-top: 10px;
+    }
+    &__credits{
+        font-size: 10px;
+    }
+}

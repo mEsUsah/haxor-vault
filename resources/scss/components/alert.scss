@@ -1,0 +1,36 @@
+.alert{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 6px;
+    border: 2px solid black;
+    padding: 10px 16px;
+    margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    p{
+        margin: 0;
+    }
+    &--error{
+        border-color: white;
+        background-color: rgb(215, 64, 58);
+        color: white;
+    }
+    &--success{
+        border-color: white;
+        background-color: #4caf50;
+        color: white;
+    }
+    &--info{
+        border-color: white;
+        background-color: #1E88E5;
+        color: white;
+    }
+    &-icon{
+        height: 16px;
+        width: 16px;
+        margin-right: 10px;
+        margin-bottom: 2px;
+    }
+}
