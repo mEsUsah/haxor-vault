@@ -1,0 +1,14 @@
+{
+  "resources/js/main.js": {
+    "file": "assets/main-C76m2goH.js",
+    "name": "main",
+    "src": "resources/js/main.js",
+    "isEntry": true
+  },
+  "resources/scss/main.scss": {
+    "file": "assets/main-l0sNRNKZ.js",
+    "name": "main",
+    "src": "resources/scss/main.scss",
+    "isEntry": true
+  }
+}

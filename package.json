@@ -1,0 +1,11 @@
+{
+    "author": "Stanley Skarshaug",
+    "scripts": {
+      "dev": "vite",
+      "prod": "vite build"
+    },
+    "dependencies": {
+      "django-vite-plugin": "^4.0.0",
+      "sass": "^1.75.0"
+    }
+  }
