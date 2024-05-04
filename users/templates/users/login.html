@@ -1,0 +1,41 @@
+{% extends "layouts/login.html" %}
+{% load static %}
+{% block content %}
+<main class="login-section__main-wrapper">
+    <img class="login-section__background" 
+        src="{% static 'images/backgrounds/bady-abbas-k0y7QTjMb3k-unsplash.webp' %}" 
+        alt="cityscape">
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <div class="alert alert--{{message.tags}}">
+                        <img class="alert-icon" 
+                            src="{% static 'icons/warning.png' %}"  
+                            alt="">
+                        <p class="alert__message">{{message}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    <div >
+        <form action="" method="POST" class="login-form__wrapper">
+            <img class="login-section__logo" 
+                src="{% static 'icons/haxor-logo-only-black.svg' %}" 
+                alt="logo">
+            {% csrf_token %}
+            <h1>Vault</h1>
+            <div class="login-form__input">
+                <input type="text" 
+                    name="username"
+                    placeholder="Username">
+            </div>
+            <div class="login-form__input">
+                <input type="password"
+                    placeholder="Password"
+                    name="password">
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</main>
+{% endblock content %}
