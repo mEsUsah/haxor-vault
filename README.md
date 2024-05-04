@@ -98,13 +98,14 @@ S3_ACTIVATED=True
 
 ## Runs uWSGI server
 ```bash
-uwsgi --socket streakhaxor.sock  --module streakhaxor.wsgi --chmod-socket=666
+uwsgi --socket vaulthaxor.sock  --module vaulthaxor.wsgi --chmod-socket=666
 ```
 
 ## Deploy new commits
+On prod server:
 ```bash
 sudo -u www-data git pull
-sudo supervisorctl restart streak_haxor
+sudo supervisorctl restart vault_haxor
 ```
 
 # Cleanup / Uninstalling
