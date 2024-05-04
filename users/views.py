@@ -14,8 +14,8 @@ def login_user(request):
             login(request, user)
             if (request.GET.get('next')):
                 return redirect(request.GET.get('next'))
-            # else:
-            #     return redirect('dashboard')
+            else:
+                messages.success(request, 'Logged in!')
     
 
     return render(request, 'users/login.html')
