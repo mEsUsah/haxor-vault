@@ -1,6 +1,6 @@
 <template>
     <div class="login-section__wrapper">
-        <div v-if="statusMessage" class="alert" :class="statusMessage.messageClass">
+        <div v-if="statusMessage" class="alert" :class="statusMessage.messageClass" id="loginAlert">
             <img class="alert-icon" 
                 :src="assets.warningIcon" 
                 alt="warning symbol">
@@ -66,23 +66,44 @@ export default defineComponent({
             })
             .then((response)=>{
                 if(response.status == 200){
-                    localStorage.setItem("password", this.password);
+                    if(response.data.authenticated){
+                        localStorage.setItem("password", this.password);
+                        this.statusMessage = {
+                            type: "success",
+                            messageClass: "alert--success",
+                            text: "Logged in!",
+                        };
+                    } else {
+                        this.statusMessage = {
+                            type: "error",
+                            messageClass: "alert--error",
+                            text: "Username or Password was wrong",
+                        };
+                        this.animateMessage();
+                        localStorage.removeItem("password");
+                    }
                 }
             })
             .catch(error => {
-                localStorage.removeItem("password");
                 this.statusMessage = {
                     type: "error",
                     messageClass: "alert--error",
-                    text: "Username or Password was wrong",
+                    text: "Sorry, we have a problem...",
                 };
-                console.log(this.statusMessage);
+                this.animateMessage();
+                location.reload(); // Refresh page to get new csrf token
             });
-            
+        },
+        animateMessage():void {
+            const loginAlert = document.getElementById("loginAlert");
+            if(loginAlert){
+                loginAlert.classList.remove("shake");
+                loginAlert.classList.add("shake");
+                setTimeout(() => {
+                    loginAlert.classList.remove("shake");
+                }, 1000);
+            }
         }
-    },
-    mounted() {
-        console.log(this.csrfToken);
-    },
+    }
 });
 </script>

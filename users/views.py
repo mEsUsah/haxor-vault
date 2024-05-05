@@ -11,12 +11,14 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is None:
             return JsonResponse({
-                "message": "Wrong username or password"
-            }, status=403)
+                "message": "Wrong username or password",
+                "authenticated": False
+            }, status=200)
         else:
             login(request, user)
             return JsonResponse({
-                "message": "successfully signed in"
+                "message": "successfully signed in",
+                "authenticated": True
             }, status=200)
     
     return render(request, 'users/login.html')
