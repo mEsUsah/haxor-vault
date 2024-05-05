@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'django_vite_plugin',
     'storages',
 
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'vault.apps.VaultConfig',
 ]
 
 MIDDLEWARE = [
