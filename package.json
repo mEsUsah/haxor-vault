@@ -5,6 +5,7 @@
         "prod": "vite build"
     },
     "dependencies": {
+        "@types/node": "^20.12.8",
         "@vitejs/plugin-vue": "^5.0.4",
         "aes256": "^1.1.0",
         "axios": "^1.6.8",
