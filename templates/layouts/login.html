@@ -26,7 +26,6 @@
 <body>
     {% block content %}
     {% endblock content %}
-    {% include "parts/footer-login.html" %}
 
     <script>const csrfToken = "{{ csrf_token }}";</script>
     {% if USE_S3 %}
