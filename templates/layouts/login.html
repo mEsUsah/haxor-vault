@@ -28,10 +28,10 @@
     {% endblock content %}
     {% include "parts/footer-login.html" %}
 
+    <script>const csrfToken = "{{ csrf_token }}";</script>
     {% if USE_S3 %}
-        <script src="{% static '' %}{{s3_file_js}}"></script>
+        <script src="{% static '' %}{{s3_file_js_login}}"></script>
     {% else %}
-        <script>const csrfToken = "{{ csrf_token }}";</script>
         {% vite 'resources/js/login.ts' %}
     {% endif %}
 </body>
