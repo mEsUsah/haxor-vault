@@ -137,24 +137,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'vaulthaxor.wsgi.application'
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "file-info": {
-            "level": "INFO",
-            "class": "logging.FileHandler",
-            "filename": "/var/log/django/streak.haxor.no/info.log",
+if not DEBUG:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "file-info": {
+                "level": "INFO",
+                "class": "logging.FileHandler",
+                "filename": "/var/log/django/streak.haxor.no/info.log",
+            },
         },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["file-info"],
-            "level": "INFO",
-            "propagate": True,
+        "loggers": {
+            "django": {
+                "handlers": ["file-info"],
+                "level": "INFO",
+                "propagate": True,
+            },
         },
-    },
-}
+    }
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
