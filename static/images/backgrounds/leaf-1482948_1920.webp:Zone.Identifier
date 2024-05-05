@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://cloudconvert.com/
+HostUrl=https://eu-central.storage.cloudconvert.com/tasks/b432f6e0-e975-430e-97a7-8c44fa4d72a9/leaf-1482948_1920.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=cloudconvert-production%2F20240505%2Ffra%2Fs3%2Faws4_request&X-Amz-Date=20240505T063930Z&X-Amz-Expires=86400&X-Amz-Signature=48012639db28d34f5d6437a6520c869193fcbe946bc59ccf5371ebf90e51893b&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%22leaf-1482948_1920.webp%22&response-content-type=image%2Fwebp&x-id=GetObject
