@@ -15,7 +15,6 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-
     {% if USE_S3 %}
         <link rel="stylesheet" href="{% static '' %}{{s3_file_css}}" />
     {% else %}
@@ -29,11 +28,10 @@
     {% endblock content %}
     {% include "parts/footer-login.html" %}
 
-
-
     {% if USE_S3 %}
         <script src="{% static '' %}{{s3_file_js}}"></script>
     {% else %}
+        <script>const csrfToken = "{{ csrf_token }}";</script>
         {% vite 'resources/js/login.ts' %}
     {% endif %}
 </body>
