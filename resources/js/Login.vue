@@ -31,6 +31,7 @@
 import axios from 'axios';
 import { PropType, defineComponent } from 'vue';
 import { staticPath } from './config.ts';
+import { generateHash } from './components/generateHash.js';
 
 interface StatusMessage {
     type: string,
@@ -52,11 +53,13 @@ export default defineComponent({
         }
     },
     methods: {
-        login(event): void {
+        login: async function(event): void {
             event.preventDefault();
+            let passwordHash: string = await generateHash(this.password);
+
             axios.post("/login", {
                 username: this.username,
-                password: this.password,
+                password: passwordHash,
                 csrfmiddlewaretoken: this.csrfToken
             }, {
                 withCredentials: true,
