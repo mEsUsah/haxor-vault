@@ -21,6 +21,9 @@ def login_user(request):
                 "authenticated": True
             }, status=200)
     
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
     return render(request, 'users/login.html')
 
 def logout_user(request):
