@@ -34,7 +34,7 @@
     {% if USE_S3 %}
         <script src="{% static '' %}{{s3_file_js}}"></script>
     {% else %}
-        {% vite 'resources/js/main.js' %}
+        {% vite 'resources/js/login.ts' %}
     {% endif %}
 </body>
 </html>

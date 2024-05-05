@@ -1,11 +1,16 @@
 {
     "author": "Stanley Skarshaug",
     "scripts": {
-      "dev": "vite",
-      "prod": "vite build"
+        "dev": "vite",
+        "prod": "vite build"
     },
     "dependencies": {
-      "django-vite-plugin": "^4.0.0",
-      "sass": "^1.75.0"
+        "@vitejs/plugin-vue": "^5.0.4",
+        "aes256": "^1.1.0",
+        "axios": "^1.6.8",
+        "django-vite-plugin": "^4.0.0",
+        "sass": "^1.75.0",
+        "typescript": "^5.4.5",
+        "vue": "^3.4.26"
     }
-  }
+}
