@@ -1,5 +1,7 @@
 __all__ = [
-    'apptype'
+    'apptype',
+    'app'
 ]
 
 from .apptype import *
+from .app import *
