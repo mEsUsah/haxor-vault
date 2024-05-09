@@ -7,12 +7,18 @@ interface AuthenticationInterface {
     csrfmiddlewaretoken: string
 }
 
+const url = "/login";
+
+/**
+ * @param {AuthenticationInterface} data - Data that will be passed to the API
+ * @returns {Promise<string>} Promise with string
+ */
 export async function authenticate(data: AuthenticationInterface): Promise<string> {
     let passwordHash: string = await generateHash(data.password);
     data.password = passwordHash;
     
     return new Promise((resolve, reject) => {
-        axios.post("/login", data, {
+        axios.post(url, data, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data'
