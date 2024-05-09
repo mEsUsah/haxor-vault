@@ -12,3 +12,6 @@ class App(models.Model):
     name = models.CharField(max_length=250, blank=True, null=True)
     apptype = models.ForeignKey(AppType, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['name']
