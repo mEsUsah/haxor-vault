@@ -32,6 +32,7 @@ import axios from 'axios';
 import { PropType, Ref, defineComponent, reactive, ref } from 'vue';
 import { staticPath } from './config';
 import { generateHash } from './components/generateHash';
+import { animateElementShake } from './components/animations'
 
 interface StatusMessage {
     type: string,
@@ -49,16 +50,7 @@ export default defineComponent({
         const password = ref(<string>"");
         const statusMessage = ref(<StatusMessage|null>null);
 
-        function animateMessage():void {
-            const loginAlert = document.getElementById("loginAlert");
-            if(loginAlert){
-                loginAlert.classList.remove("shake");
-                loginAlert.classList.add("shake");
-                setTimeout(() => {
-                    loginAlert.classList.remove("shake");
-                }, 1000);
-            }
-        }
+        
 
         async function login(event:Event): Promise<void> {
             event.preventDefault();
@@ -89,7 +81,7 @@ export default defineComponent({
                             messageClass: "alert--error",
                             text: "Username or Password was wrong",
                         };
-                        animateMessage();
+                        animateElementShake("loginAlert");
                         localStorage.removeItem("password");
                     }
                 }
@@ -100,7 +92,7 @@ export default defineComponent({
                     messageClass: "alert--error",
                     text: "Sorry, we have a problem...",
                 };
-                animateMessage();
+                animateElementShake("loginAlert");
                 location.reload(); // Refresh page to get new csrf token
             });
         }
