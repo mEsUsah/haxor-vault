@@ -1,0 +1,37 @@
+.button{
+    background-color: $color-green;
+    color: $color-text;
+    border: 1px solid $color-green;
+    cursor: pointer;
+    text-align: center;
+    height: 26px;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 0 16px;
+    margin-right: 10px;
+    &:last-child{
+        margin-right: 0;
+    }
+    &--add{
+        width: 36px;
+        padding: 0;
+    }
+    &--danger{
+        background-color: $color-red;
+        border-color: $color-red;
+    }
+    &--nautral{
+        background-color: $color-blue;
+        border-color: $color-blue;
+    }
+    
+    &:disabled{
+        background-color: $color-green--disable;
+        color: $color-text;
+        cursor: not-allowed;
+        border-color: $color-green--disable;
+        opacity: 0.65;
+    }
+}
