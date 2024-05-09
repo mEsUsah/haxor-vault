@@ -7,3 +7,9 @@ def dashboard(request):
     context = {
     }
     return render(request, 'vault/dashboard.html', context)
+
+@login_required(login_url="login")
+def create_app(request):
+    context = {
+    }
+    return render(request, 'vault/app_form.html', context)
