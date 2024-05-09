@@ -69,6 +69,9 @@ export default defineComponent({
                     messageClass: "alert--success",
                     text: "Logged in!",
                 };
+                setTimeout(() => {
+                    location.href = "/dashboard";
+                }, 1000);
             }).catch(error => {
                 if(error == "password-error"){
                     statusMessage.value = {
