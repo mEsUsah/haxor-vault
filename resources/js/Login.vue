@@ -28,16 +28,22 @@
     </div>
 </template>
 <script lang="ts">
-import axios from 'axios';
+
 import { PropType, Ref, defineComponent, reactive, ref } from 'vue';
 import { staticPath } from './config';
-import { generateHash } from './components/generateHash';
-import { animateElementShake } from './components/animations'
+import { animateElementShake } from './components/animations';
+import { authenticate } from './components/authenticate';
 
 interface StatusMessage {
     type: string,
     messageClass: string,
     text: string,
+}
+
+interface AuthenticationInterface {
+    username: string,
+    password: string,
+    csrfmiddlewaretoken: string
 }
 
 export default defineComponent({
@@ -50,41 +56,12 @@ export default defineComponent({
         const password = ref(<string>"");
         const statusMessage = ref(<StatusMessage|null>null);
 
-        async function authenticate(data: object): Promise<string> {
-            return new Promise((resolve, reject) => {
-                axios.post("/login", data, {
-                    withCredentials: true,
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                })
-                .then((response)=>{
-                    if(response.status == 200){
-                        if(response.data.authenticated){
-                            localStorage.setItem("password", password.value);
-                            resolve("success");
-                        } else {
-                            localStorage.removeItem("password");
-                            reject("password-error");
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                    reject("system-error");
-                });
-
-            })
-        }
-
         async function login(event:Event): Promise<void> {
             event.preventDefault();
-            let passwordHash: string = await generateHash(password.value);
             
- 
-            await authenticate({
+            await authenticate(<AuthenticationInterface>{
                 username: username.value,
-                password: passwordHash,
+                password: password.value,
                 csrfmiddlewaretoken: csrfToken
             }).then(() => {
                 statusMessage.value = {
