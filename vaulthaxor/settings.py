@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django_vite_plugin',
     'storages',
 
+    'jwtauth.apps.JwtauthConfig',
     'users.apps.UsersConfig',
     'vault.apps.VaultConfig',
 ]
