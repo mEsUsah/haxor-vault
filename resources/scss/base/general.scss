@@ -26,3 +26,15 @@ footer{
     display: flex;
     margin: 10px;
 }
+
+.section{
+    &__hedline{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        h1{
+            margin: 0;
+        }
+    }
+}

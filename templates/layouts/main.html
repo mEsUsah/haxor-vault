@@ -39,8 +39,10 @@
             {% endfor %}
         </div>
     {% endif %}
-    {% block content %}
-    {% endblock content %}
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
     {% include "parts/footer.html" %}
 
     {% if USE_S3 %}
