@@ -29,7 +29,7 @@
 </template>
 <script lang="ts">
 import axios from 'axios';
-import { PropType, defineComponent } from 'vue';
+import { PropType, Ref, defineComponent, reactive, ref } from 'vue';
 import { staticPath } from './config';
 import { generateHash } from './components/generateHash';
 
@@ -40,27 +40,34 @@ interface StatusMessage {
 }
 
 export default defineComponent({
-    data() {
-        return {
-            assets: <object>{
-                haxorLogo: <string>staticPath + 'icons/haxor-logo-only-black.svg',
-                warningIcon: <string>staticPath + 'icons/warning.png'
-            },
-            csrfToken: <string>csrfToken,
-            username: <string>"",
-            password: <string>"",
-            statusMessage: <unknown>null
+    setup(){
+        const assets: object = reactive({
+            haxorLogo: <string>staticPath + 'icons/haxor-logo-only-black.svg',
+            warningIcon: <string>staticPath + 'icons/warning.png'
+        });
+        const username = ref(<string>"");
+        const password = ref(<string>"");
+        const statusMessage = ref(<StatusMessage|null>null);
+
+        function animateMessage():void {
+            const loginAlert = document.getElementById("loginAlert");
+            if(loginAlert){
+                loginAlert.classList.remove("shake");
+                loginAlert.classList.add("shake");
+                setTimeout(() => {
+                    loginAlert.classList.remove("shake");
+                }, 1000);
+            }
         }
-    },
-    methods: {
-        login: async function(event:Event): Promise<void> {
+
+        async function login(event:Event): Promise<void> {
             event.preventDefault();
-            let passwordHash: string = await generateHash(this.password);
+            let passwordHash: string = await generateHash(password.value);
 
             axios.post("/login", {
-                username: this.username,
+                username: username.value,
                 password: passwordHash,
-                csrfmiddlewaretoken: this.csrfToken
+                csrfmiddlewaretoken: csrfToken
             }, {
                 withCredentials: true,
                 headers: {
@@ -70,42 +77,40 @@ export default defineComponent({
             .then((response)=>{
                 if(response.status == 200){
                     if(response.data.authenticated){
-                        localStorage.setItem("password", this.password);
-                        this.statusMessage = {
+                        localStorage.setItem("password", password.value);
+                        statusMessage.value = {
                             type: "success",
                             messageClass: "alert--success",
                             text: "Logged in!",
                         };
                     } else {
-                        this.statusMessage = {
+                        statusMessage.value = {
                             type: "error",
                             messageClass: "alert--error",
                             text: "Username or Password was wrong",
                         };
-                        this.animateMessage();
+                        animateMessage();
                         localStorage.removeItem("password");
                     }
                 }
             })
             .catch(error => {
-                this.statusMessage = {
+                statusMessage.value = {
                     type: "error",
                     messageClass: "alert--error",
                     text: "Sorry, we have a problem...",
                 };
-                this.animateMessage();
+                animateMessage();
                 location.reload(); // Refresh page to get new csrf token
             });
-        },
-        animateMessage():void {
-            const loginAlert = document.getElementById("loginAlert");
-            if(loginAlert){
-                loginAlert.classList.remove("shake");
-                loginAlert.classList.add("shake");
-                setTimeout(() => {
-                    loginAlert.classList.remove("shake");
-                }, 1000);
-            }
+        }
+
+        return {
+            assets,
+            username,
+            password,
+            statusMessage,
+            login
         }
     }
 });
