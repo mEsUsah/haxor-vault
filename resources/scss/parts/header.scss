@@ -1,0 +1,37 @@
+.header{
+    &__wrapper{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: black;
+        height: 125px;
+    }
+    &__title{
+        margin-left: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+        text-decoration: none;
+        
+        &--icon{
+            height: 125px;
+            width: 75px;
+            margin-right: 10px;
+            position: relative;
+            background-position: 0 33px;
+            background-repeat: no-repeat;
+            display: block;
+            bottom: -8px;
+        }
+        &--iconText{
+            height: 125px;
+            width: 180px;
+            position: relative;
+            background-position: 0 47px;
+            background-repeat: no-repeat;
+            display: block;
+            top: -3px;
+        }
+    }
+}
