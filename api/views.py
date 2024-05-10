@@ -131,4 +131,17 @@ def credential_details(request, id):
 
     if request.method == "GET":
         serializer = CredentialSerializer(credential)
-        return Response(serializer.data)   
+        return Response(serializer.data)
+    
+    if request.method == "PUT":
+        data = JSONParser().parse(request)
+        serializer = CredentialSerializer(credential, data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=200)
+        else:
+            return JsonResponse({
+                'message': "Validation error",
+                'errors': serializer.errors, 
+            }, status=400)
