@@ -1,5 +1,6 @@
 import datetime
 from django.db import IntegrityError
+from django.core.exceptions import ValidationError
 from django.db.models import Max
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
@@ -47,6 +48,10 @@ def app_details(request, id):
         return JsonResponse({
             'message': "Not found",
         }, status=404)
+    except ValidationError:
+        return JsonResponse({
+            'message': "invalid UUID",
+        }, status=400)
     
     if app.user != request.user:
         return JsonResponse({
@@ -108,5 +113,22 @@ def credential_details(request, id):
     """
     Retrieve, update or delete a user credential.
     """
-    pass
-   
+    try:
+        credential = Credential.objects.get(pk=id)
+    except Credential.DoesNotExist:
+        return JsonResponse({
+            'message': "Not found",
+        }, status=404)
+    except ValidationError:
+        return JsonResponse({
+            'message': "invalid UUID",
+        }, status=400)
+    
+    if credential.app.user != request.user:
+        return JsonResponse({
+            'message': "Not yours",
+        }, status=403)
+
+    if request.method == "GET":
+        serializer = CredentialSerializer(credential)
+        return Response(serializer.data)   
