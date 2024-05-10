@@ -7,7 +7,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
-from api.serializers import AppSerializer, CredentialSerializer
+from api.serializers import AppSerializer, AppsSerializer, \
+    CredentialSerializer, CredentialsSerializer
 from vault.models import App, Credential
 
 @api_view(['GET', 'POST'])
@@ -19,7 +20,7 @@ def app_list(request):
 
     if request.method == "GET":
         apps = request.user.app_set
-        serializer = AppSerializer(apps, many=True)
+        serializer = AppsSerializer(apps, many=True)
         return Response(serializer.data)
     
     if request.method == "POST":
@@ -59,12 +60,13 @@ def app_details(request, id):
         }, status=403)
 
     if request.method == "GET":
-        serializer = AppSerializer(app)
+        serializer = AppsSerializer(app)
         return Response(serializer.data)
     
     if request.method == "PUT":
         data = JSONParser().parse(request)
-        serializer = AppSerializer(app, data=data)
+        data['user'] = request.user.id
+        serializer = AppsSerializer(app, data=data)
 
         if serializer.is_valid():
             serializer.save()
@@ -90,7 +92,7 @@ def credential_list(request):
     """
     if request.method == "GET":
         credentials = Credential.objects.filter(app__user=request.user)
-        serializer = CredentialSerializer(credentials, many=True)
+        serializer = CredentialsSerializer(credentials, many=True)
         return Response(serializer.data)
     
     if request.method == "POST":
@@ -130,12 +132,12 @@ def credential_details(request, id):
         }, status=403)
 
     if request.method == "GET":
-        serializer = CredentialSerializer(credential)
+        serializer = CredentialsSerializer(credential)
         return Response(serializer.data)
     
     if request.method == "PUT":
         data = JSONParser().parse(request)
-        serializer = CredentialSerializer(credential, data=data)
+        serializer = CredentialsSerializer(credential, data=data)
 
         if serializer.is_valid():
             serializer.save()
