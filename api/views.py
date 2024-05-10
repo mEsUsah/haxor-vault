@@ -12,12 +12,16 @@ from vault.models import App
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def app_list(request):
+    """
+    List all user apps, or create a new app.
+    """
+
     if request.method == "GET":
         apps = request.user.app_set
         serializer = AppSerializer(apps, many=True)
         return Response(serializer.data)
     
-    if request.method == 'POST':
+    if request.method == "POST":
         data = JSONParser().parse(request)
         data['user'] = request.user.id
 
@@ -34,4 +38,21 @@ def app_list(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def app_details(request, app_id):
-    pass
+    """
+    Retrieve, update or delete a user app.
+    """
+    try:
+        app = App.objects.get(pk=app_id)
+    except App.DoesNotExist:
+        return JsonResponse({
+            'message': "App does not exist",
+        }, status=404)
+    
+    if app.user != request.user:
+        return JsonResponse({
+            'message': "App is not yours",
+        }, status=403)
+
+    if request.method == "GET":
+        serializer = AppSerializer(app)
+        return Response(serializer.data)
