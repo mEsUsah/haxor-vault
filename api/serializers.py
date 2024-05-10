@@ -14,13 +14,21 @@ class AppTypeSerializer(serializers.ModelSerializer):
         fields = ['id','name']
 
 
-class AppSerializer(serializers.ModelSerializer):
+class AppsSerializer(serializers.ModelSerializer):
+    """
+    Serializer for apps. Does NOT include related credentials
+    """
+
     class Meta:
         model = App
         fields = ['id','name', 'apptype','user']
 
 
-class AppsSerializer(serializers.ModelSerializer):
+class AppSerializer(serializers.ModelSerializer):
+    """
+    Serializer for apps used to show related credentials on app
+    """
+
     class Meta:
         model = App
         fields = ['id','name', 'apptype','user','credentials']
@@ -29,17 +37,23 @@ class AppsSerializer(serializers.ModelSerializer):
 
     def get_credentials(self, object):
         credentials = object.credential_set.all()
-        serializer = CredentialSerializer(credentials, many=True)
+        serializer = CredentialsSerializer(credentials, many=True)
         return serializer.data
 
 
-class CredentialSerializer(serializers.ModelSerializer):
+class CredentialsSerializer(serializers.ModelSerializer):
+    """
+    Serializer for credentials. Does NOT include related app details
+    """
     class Meta:
         model = Credential
         fields = ['id','app','username','password']
 
 
-class CredentialsSerializer(serializers.ModelSerializer):
+class CredentialSerializer(serializers.ModelSerializer):
+    """
+    Serializer for credentials used to show related app details
+    """
     class Meta:
         model = Credential
         fields = ['id','app','username','password']
@@ -48,5 +62,5 @@ class CredentialsSerializer(serializers.ModelSerializer):
 
     def get_app(self, object):
         app = object.app
-        serializer = AppSerializer(app)
+        serializer = AppsSerializer(app)
         return serializer.data

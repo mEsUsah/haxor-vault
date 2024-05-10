@@ -20,13 +20,13 @@ def app_list(request):
 
     if request.method == "GET":
         apps = request.user.app_set
-        serializer = AppsSerializer(apps, many=True)
+        serializer = AppSerializer(apps, many=True)
         return Response(serializer.data)
     
     if request.method == "POST":
         data = JSONParser().parse(request)
         data['user'] = request.user.id
-        serializer = AppSerializer(data=data)
+        serializer = AppsSerializer(data=data)
 
         if serializer.is_valid():
             serializer.save()
@@ -60,13 +60,13 @@ def app_details(request, id):
         }, status=403)
 
     if request.method == "GET":
-        serializer = AppsSerializer(app)
+        serializer = AppSerializer(app)
         return Response(serializer.data)
     
     if request.method == "PUT":
         data = JSONParser().parse(request)
         data['user'] = request.user.id
-        serializer = AppsSerializer(app, data=data)
+        serializer = AppSerializer(app, data=data)
 
         if serializer.is_valid():
             serializer.save()
@@ -92,13 +92,13 @@ def credential_list(request):
     """
     if request.method == "GET":
         credentials = Credential.objects.filter(app__user=request.user)
-        serializer = CredentialsSerializer(credentials, many=True)
+        serializer = CredentialSerializer(credentials, many=True)
         return Response(serializer.data)
     
     if request.method == "POST":
         data = JSONParser().parse(request)
         data['user'] = request.user.id
-        serializer = CredentialSerializer(data=data)
+        serializer = CredentialsSerializer(data=data)
 
         if serializer.is_valid():
             serializer.save()
@@ -132,12 +132,12 @@ def credential_details(request, id):
         }, status=403)
 
     if request.method == "GET":
-        serializer = CredentialsSerializer(credential)
+        serializer = CredentialSerializer(credential)
         return Response(serializer.data)
     
     if request.method == "PUT":
         data = JSONParser().parse(request)
-        serializer = CredentialsSerializer(credential, data=data)
+        serializer = CredentialSerializer(credential, data=data)
 
         if serializer.is_valid():
             serializer.save()
