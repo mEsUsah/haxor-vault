@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'storages',
 
     'jwtauth.apps.JwtauthConfig',
+    'api.apps.ApiConfig',
     'users.apps.UsersConfig',
     'vault.apps.VaultConfig',
 ]
