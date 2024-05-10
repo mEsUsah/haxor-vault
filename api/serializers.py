@@ -23,6 +23,12 @@ class AppsSerializer(serializers.ModelSerializer):
         model = App
         fields = ['id','name', 'apptype','user']
 
+    apptype = serializers.SerializerMethodField()
+    def get_apptype(self, object):
+        apptype = object.apptype
+        serializer = AppTypeSerializer(apptype)
+        return serializer.data
+
 
 class AppSerializer(serializers.ModelSerializer):
     """
@@ -34,10 +40,15 @@ class AppSerializer(serializers.ModelSerializer):
         fields = ['id','name', 'apptype','user','credentials']
 
     credentials = serializers.SerializerMethodField()
-
     def get_credentials(self, object):
         credentials = object.credential_set.all()
         serializer = CredentialsSerializer(credentials, many=True)
+        return serializer.data
+    
+    apptype = serializers.SerializerMethodField()
+    def get_apptype(self, object):
+        apptype = object.apptype
+        serializer = AppTypeSerializer(apptype)
         return serializer.data
 
 
