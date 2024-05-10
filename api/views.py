@@ -7,10 +7,16 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from api.serializers import AppSerializer
+from vault.models import App
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def app_list(request):
+    if request.method == "GET":
+        apps = request.user.app_set
+        serializer = AppSerializer(apps, many=True)
+        return Response(serializer.data)
+    
     if request.method == 'POST':
         data = JSONParser().parse(request)
         data['user'] = request.user.id
