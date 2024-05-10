@@ -24,8 +24,8 @@ def app_list(request):
     if request.method == "POST":
         data = JSONParser().parse(request)
         data['user'] = request.user.id
-
         serializer = AppSerializer(data=data)
+        
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
@@ -35,7 +35,7 @@ def app_list(request):
                 'errors': serializer.errors, 
             }, status=400)
 
-@api_view(['GET'])
+@api_view(['GET','PUT'])
 @permission_classes([IsAuthenticated])
 def app_details(request, app_id):
     """
@@ -56,3 +56,16 @@ def app_details(request, app_id):
     if request.method == "GET":
         serializer = AppSerializer(app)
         return Response(serializer.data)
+    
+    if request.method == "PUT":
+        data = JSONParser().parse(request)
+        serializer = AppSerializer(app, data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=200)
+        else:
+            return JsonResponse({
+                'message': "validation error",
+                'errors': serializer.errors, 
+            }, status=400)
