@@ -15,3 +15,6 @@ class App(models.Model):
 
     class Meta:
         ordering = ['name']
+
+    def __str__(self):
+        return str(self.user.username + " - " + self.apptype.name + " - " + self.name)

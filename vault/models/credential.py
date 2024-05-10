@@ -10,3 +10,6 @@ class Credential(models.Model):
     app = models.ForeignKey(App, on_delete=models.CASCADE)
     username = models.CharField(max_length=200, blank=True, null=True)
     password = models.CharField(max_length=200, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.app.user.username + " - " + self.app.apptype.name + " - " + self.app.name + " - " + str(self.id))
