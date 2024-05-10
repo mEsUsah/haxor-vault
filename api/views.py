@@ -25,7 +25,7 @@ def app_list(request):
         data = JSONParser().parse(request)
         data['user'] = request.user.id
         serializer = AppSerializer(data=data)
-        
+
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
@@ -35,7 +35,7 @@ def app_list(request):
                 'errors': serializer.errors, 
             }, status=400)
 
-@api_view(['GET','PUT'])
+@api_view(['GET','PUT','DELETE'])
 @permission_classes([IsAuthenticated])
 def app_details(request, app_id):
     """
@@ -45,12 +45,12 @@ def app_details(request, app_id):
         app = App.objects.get(pk=app_id)
     except App.DoesNotExist:
         return JsonResponse({
-            'message': "App does not exist",
+            'message': "Not found",
         }, status=404)
     
     if app.user != request.user:
         return JsonResponse({
-            'message': "App is not yours",
+            'message': "Not yours",
         }, status=403)
 
     if request.method == "GET":
@@ -66,6 +66,12 @@ def app_details(request, app_id):
             return JsonResponse(serializer.data, status=200)
         else:
             return JsonResponse({
-                'message': "validation error",
+                'message': "Validation error",
                 'errors': serializer.errors, 
             }, status=400)
+        
+    if request.method == "DELETE":
+        app.delete()
+        return JsonResponse({
+            'message': "Successfully Deleted",
+        }, status=200)
