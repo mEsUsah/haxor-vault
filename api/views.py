@@ -145,3 +145,9 @@ def credential_details(request, id):
                 'message': "Validation error",
                 'errors': serializer.errors, 
             }, status=400)
+    
+    if request.method == "DELETE":
+        credential.delete()
+        return JsonResponse({
+            'message': "Successfully Deleted",
+        }, status=200)
