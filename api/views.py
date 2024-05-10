@@ -1,21 +1,31 @@
 import datetime
 from django.db import IntegrityError
 from django.db.models import Max
+from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def app_index(request):
-    pass
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def app(request, app_id):
-    pass
+from rest_framework.parsers import JSONParser
+from api.serializers import AppSerializer
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def app_create(request, app_id):
+def app_list(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        data['user'] = request.user.id
+
+        serializer = AppSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        else:
+            return JsonResponse({
+                'message': "validation error",
+                'errors': serializer.errors, 
+            }, status=400)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def app_details(request, app_id):
     pass
