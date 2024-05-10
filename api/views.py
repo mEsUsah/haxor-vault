@@ -6,8 +6,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
-from api.serializers import AppSerializer
-from vault.models import App
+from api.serializers import AppSerializer, CredentialSerializer
+from vault.models import App, Credential
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -37,12 +37,12 @@ def app_list(request):
 
 @api_view(['GET','PUT','DELETE'])
 @permission_classes([IsAuthenticated])
-def app_details(request, app_id):
+def app_details(request, id):
     """
     Retrieve, update or delete a user app.
     """
     try:
-        app = App.objects.get(pk=app_id)
+        app = App.objects.get(pk=id)
     except App.DoesNotExist:
         return JsonResponse({
             'message': "Not found",
@@ -75,3 +75,38 @@ def app_details(request, app_id):
         return JsonResponse({
             'message': "Successfully Deleted",
         }, status=200)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def credential_list(request):
+    """
+    List all user credentials, or create a new credential.
+    """
+    if request.method == "GET":
+        credentials = Credential.objects.filter(app__user=request.user)
+        serializer = CredentialSerializer(credentials, many=True)
+        return Response(serializer.data)
+    
+    if request.method == "POST":
+        data = JSONParser().parse(request)
+        data['user'] = request.user.id
+        serializer = CredentialSerializer(data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        else:
+            return JsonResponse({
+                'message': "validation error",
+                'errors': serializer.errors, 
+            }, status=400)
+
+@api_view(['GET','PUT','DELETE'])
+@permission_classes([IsAuthenticated])
+def credential_details(request, id):
+    """
+    Retrieve, update or delete a user credential.
+    """
+    pass
+   
