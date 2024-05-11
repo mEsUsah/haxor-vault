@@ -45,6 +45,7 @@
     </main>
     {% include "parts/footer.html" %}
 
+    <script>const csrfToken = "{{ csrf_token }}";</script>
     {% if USE_S3 %}
         <script src="{% static '' %}{{s3_file_js}}"></script>
     {% else %}
