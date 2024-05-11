@@ -7,10 +7,23 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
-from api.serializers import AppSerializer, AppsSerializer, \
+from api.serializers import AppTypeSerializer, \
+    AppSerializer, AppsSerializer, \
     CredentialSerializer, CredentialsSerializer
-from vault.models import App, Credential
+from vault.models import AppType, App, Credential
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def apptype_list(request):
+    """
+    List all app types.
+    """
+
+    if request.method == "GET":
+        appTypes = AppType.objects.all()
+        serializer = AppTypeSerializer(appTypes, many=True)
+        return Response(serializer.data)
+        
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def app_list(request):
