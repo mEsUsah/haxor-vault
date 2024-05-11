@@ -3,15 +3,23 @@
         <p>hello apps</p>
         <div>
             <div v-for="app in apps">
-                <p>{{ app.name }}</p>
+                <ul>
+                    <li>{{ app.name }}</li>
+                    <ul>
+                        <li v-if="app.credentials != null" v-for="credential in app.credentials">
+                            {{ credential?.username }}:{{ credential?.password }}
+                        </li>
+                    </ul>
+                </ul>
             </div>
         </div>
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref, reactive } from 'vue';
-import {Credential, AppType, App} from './components/interfaces.ts';
 import axios from 'axios';
+import { defineComponent, onMounted, ref } from 'vue';
+import { App } from './components/interfaces.ts';
+import { decryptAES } from './components/cryptography.ts';
 
 const api_host = "http://127.0.0.1:8000";
 const api_apps = "/api/v1/apps";
@@ -19,19 +27,67 @@ const api_apps = "/api/v1/apps";
 
 export default defineComponent({
     setup() {
+        const password = ref<string>("");
         const apps = ref<App[]>([]);
         
-        function getApps(){
-            axios.get(api_host + api_apps, { withCredentials: true })
-                .then(response => {
-                    if(response.status == 200){
-                        apps.value = response.data;
-                    }
-                });
+
+        /**
+         * Get user password from local storage in browser.
+         * 
+         * Redirects to logout page if not found.
+         * @returns password
+         */
+        function getPassword(): string{
+            let password = localStorage.getItem("password");
+            if (password){
+                return password;
+            } else {
+                window.location.href = "/logout";
+                return "";
+            }
+        }
+
+        async function getApps(): Promise<string>{
+            return new Promise((resolve, reject) => {
+                axios.get(api_host + api_apps, { withCredentials: true })
+                    .then(response => {
+                        if(response.status == 200){
+                            apps.value = response.data;
+                            resolve('done');
+                        }
+                    }).catch(error => {
+                        reject('failed');
+                    });
+            }); 
+        }
+
+        /**
+         * Decrypts Array of Apps, and credentials found in each app.
+         * @param { App[] } encryptedApps - Array of Apps with encrypted name and credentials
+         * @param {string} key - Decryption key
+         * @returns { App[] } Decrypted Apps
+         */
+        function decrypteApps(encryptedApps:App[], key: string): App[] {
+            let decryptedApps:App[] = [];
+            encryptedApps.forEach(app => {
+                app.name = decryptAES(app.name, key);
+                app.credentials.forEach(credential => {
+                    credential.username = decryptAES(credential.username, key);
+                    credential.password = decryptAES(credential.password, key);
+                })
+                decryptedApps.push(app);
+            });
+            return decryptedApps;
+        }
+
+        async function getData(): Promise<void>{
+            password.value = getPassword();
+            await getApps();
+            apps.value = decrypteApps(apps.value, password.value);
         }
 
         onMounted(() => {
-            getApps();
+            getData();
         });
 
         return {
