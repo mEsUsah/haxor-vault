@@ -9,7 +9,7 @@ const salt = 'hackingIsSimplyCuriosity';
  * @param {string} password - plaintext password that is to be hashed.
  * @returns {Promise<string>} Promise with hash string.
  */
-export function generateHash(password: string): Promise<string> {
+export function hashArgon2(password: string): Promise<string> {
     return new Promise((resolve, reject) => {
         argon2.hash({ pass: password, salt: salt })
             .then(hash => {

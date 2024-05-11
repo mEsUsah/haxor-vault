@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { generateHash } from './cryptography.ts';
-import { AuthenticationData} from './interfaces.ts';
+import { hashArgon2 } from './cryptography.ts';
+import { AuthenticationData } from './interfaces.ts';
 
 const url = "/login";
 
@@ -17,7 +17,7 @@ const url = "/login";
  */
 export async function authenticate(data: AuthenticationData): Promise<string> {
     let passwordClearText = data.password;
-    let passwordHash: string = await generateHash(passwordClearText);
+    let passwordHash: string = await hashArgon2(passwordClearText);
     data.password = passwordHash;
     
     return new Promise((resolve, reject) => {
