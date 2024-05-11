@@ -26,6 +26,6 @@ export interface App {
     id: string,
     name: string,
     apptype: AppType,
-    credentials: Array<Credential|null>,
+    credentials: Array<Credential>,
     user: number
 };
