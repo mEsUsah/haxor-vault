@@ -30,18 +30,7 @@ import StatusMessageBox from './views/MessageBox.vue';
 import { staticPath } from './config';
 import { animateElementShake } from './components/animations';
 import { authenticate } from './components/authenticate';
-
-interface StatusMessage {
-    type: string,
-    messageClass: string,
-    text: string,
-}
-
-interface AuthenticationInterface {
-    username: string,
-    password: string,
-    csrfmiddlewaretoken: string
-}
+import {StatusMessage, AuthenticationData} from './components/interfaces.ts';
 
 export default defineComponent({
     components: {
@@ -58,7 +47,7 @@ export default defineComponent({
         async function login(event:Event): Promise<void> {
             event.preventDefault();
             
-            await authenticate(<AuthenticationInterface>{
+            await authenticate(<AuthenticationData>{
                 username: username.value,
                 password: password.value,
                 csrfmiddlewaretoken: csrfToken

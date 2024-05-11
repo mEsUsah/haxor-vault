@@ -1,11 +1,6 @@
 import axios from 'axios';
 import { generateHash } from './generateHash';
-
-interface AuthenticationInterface {
-    username: string,
-    password: string,
-    csrfmiddlewaretoken: string
-}
+import { AuthenticationData} from './interfaces.ts';
 
 const url = "/login";
 
@@ -20,7 +15,7 @@ const url = "/login";
  * @param {AuthenticationInterface} data - Data that will be passed to the API.
  * @returns {Promise<string>} Promise with status string.
  */
-export async function authenticate(data: AuthenticationInterface): Promise<string> {
+export async function authenticate(data: AuthenticationData): Promise<string> {
     let passwordClearText = data.password;
     let passwordHash: string = await generateHash(passwordClearText);
     data.password = passwordHash;

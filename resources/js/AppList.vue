@@ -10,31 +10,12 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, ref, reactive } from 'vue';
+import {Credential, AppType, App} from './components/interfaces.ts';
 import axios from 'axios';
 
 const api_host = "http://127.0.0.1:8000";
 const api_apps = "/api/v1/apps";
 
-interface Credential{
-    app: string,
-    id: string,
-    password: string,
-    username: string,
-}
-
-interface AppType{
-    id: string,
-    name: string,
-}
-
-interface App {
-    id: string,
-    name: string,
-    apptype: AppType,
-    credentials: Array<Credential|null>,
-    user: number
-
-};
 
 export default defineComponent({
     setup() {
