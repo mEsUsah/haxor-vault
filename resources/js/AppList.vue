@@ -46,15 +46,11 @@
     </div>
 </template>
 <script lang="ts">
-import axios from 'axios';
 import { defineComponent, onMounted, ref, reactive } from 'vue';
 import { staticPath } from './config';
 import { App } from './components/interfaces.ts';
 import { decryptAES } from './components/cryptography.ts';
-
-const api_host = "http://127.0.0.1:8000";
-const api_apps = "/api/v1/apps";
-
+import { getApps } from './components/appCRUD.ts'
 
 export default defineComponent({
     setup() {
@@ -69,12 +65,12 @@ export default defineComponent({
         
 
         /**
-         * Get user password from local storage in browser.
+         * Get master password from local storage in browser.
          * 
          * Redirects to logout page if not found.
          * @returns password
          */
-        function getPassword(): string{
+        function getMasterPassword(): string{
             let password = localStorage.getItem("password");
             if (password){
                 return password;
@@ -82,19 +78,6 @@ export default defineComponent({
                 window.location.href = "/logout";
                 return "";
             }
-        }
-
-        async function getApps(): Promise<App[]>{
-            return new Promise((resolve, reject) => {
-                axios.get(api_host + api_apps)
-                    .then(response => {
-                        if(response.status == 200){
-                            resolve(response.data);
-                        }
-                    }).catch(error => {
-                        reject('Failed to get apps from the API');
-                    });
-            }); 
         }
 
         /**
@@ -126,7 +109,7 @@ export default defineComponent({
         }
 
         async function getData(): Promise<void>{
-            password.value = getPassword();
+            password.value = getMasterPassword();
             apps.value = await getApps();
             apps.value = decryptApps(apps.value, password.value);
         }
