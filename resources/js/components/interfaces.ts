@@ -29,3 +29,9 @@ export interface App {
     credentials: Array<Credential>,
     user: number
 };
+
+export interface AppSchema{
+    name: string,
+    apptype: string,
+    csrfmiddlewaretoken: string,
+}
