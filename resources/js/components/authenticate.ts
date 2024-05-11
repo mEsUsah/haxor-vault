@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { generateHash } from './generateHash';
+import { generateHash } from './cryptography.ts';
 import { AuthenticationData} from './interfaces.ts';
 
 const url = "/login";
