@@ -1,4 +1,5 @@
 import argon2 from "argon2-browser/dist/argon2-bundled.min.js";
+import CryptoJS  from 'crypto-js';
 
 const salt = 'hackingIsSimplyCuriosity';
 
@@ -20,3 +21,12 @@ export function generateHash(password: string): Promise<string> {
             });
     });
 };
+
+export function encryptAES(plaintext: string, key: string): string{
+    return CryptoJS.AES.encrypt(plaintext, key).toString();
+}
+
+export function decryptAES(ciphertext: string, key: string): string{
+    var bytes  = CryptoJS.AES.decrypt(ciphertext, key);
+    return bytes.toString(CryptoJS.enc.Utf8);
+}

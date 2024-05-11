@@ -7,9 +7,9 @@
     "dependencies": {
         "@types/node": "^20.12.8",
         "@vitejs/plugin-vue": "^5.0.4",
-        "aes256": "^1.1.0",
         "argon2-browser": "^1.18.0",
         "axios": "^1.6.8",
+        "crypto-js": "^4.2.0",
         "django-vite-plugin": "^4.0.0",
         "sass": "^1.75.0",
         "typescript": "^5.4.5",
