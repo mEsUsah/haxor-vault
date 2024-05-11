@@ -4,7 +4,6 @@
     border: 1px solid $color-green;
     cursor: pointer;
     text-align: center;
-    height: 26px;
     font-size: 20px;
     font-weight: 500;
     border-radius: 5px;
@@ -26,6 +25,17 @@
         background-color: $color-blue;
         border-color: $color-blue;
     }
+    &--icon{
+        padding: 4px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: unset;
+        height: 29px;
+        width: 29px;
+        margin-right: 6px;
+    }
     
     &:disabled{
         background-color: $color-green--disable;
@@ -33,5 +43,10 @@
         cursor: not-allowed;
         border-color: $color-green--disable;
         opacity: 0.65;
+    }
+
+    &__logo{
+        height: 20px;
+        width: 20px;
     }
 }

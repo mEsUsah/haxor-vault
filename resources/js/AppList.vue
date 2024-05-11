@@ -1,23 +1,52 @@
 <template>
     <div>
-        <p>hello apps</p>
         <div>
             <div v-for="app in apps">
-                <ul>
-                    <li>{{ app.name }}</li>
-                    <ul>
-                        <li v-if="app.credentials != null" v-for="credential in app.credentials">
-                            {{ credential?.username }}:{{ credential?.password }}
-                        </li>
-                    </ul>
-                </ul>
+                <div class="app-item__wrapper">
+                    <div class="app-item__headline">
+                        <div class="app-item__icon">
+                            <img class="button__logo" 
+                                :src="assets.webLogo" 
+                                alt="user">
+                        </div>
+                        <span class="app-item__title">{{ app.name }}</span>
+                        <a href="#" class="button button--danger">Edit</a>
+                    </div>
+                    <div v-if="app.credentials.length > 0" class="app-item__content">
+                        <div 
+                            class="app-item__credential-wrapper"
+                            v-for="credential in app.credentials" 
+                            :key="credential.id">
+                            <button class="button button--icon">
+                                <img class="button__logo" 
+                                    :src="assets.userLogo" 
+                                    alt="user">
+                            </button>
+                            <button class="button button--icon">
+                                <img class="button__logo" 
+                                    :src="assets.passwordLogo" 
+                                    alt="password">
+                            </button>
+                            <span class="app-item__credential-name">{{ credential?.username }}</span>
+                            <button class="button button--danger button--icon">
+                                <img class="button__logo" 
+                                    :src="assets.settingsLogo" 
+                                    alt="edit">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="app-item__footer">
+                        <a href="#" class="button button--danger">&plus; Add credential</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script lang="ts">
 import axios from 'axios';
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref, reactive } from 'vue';
+import { staticPath } from './config';
 import { App } from './components/interfaces.ts';
 import { decryptAES } from './components/cryptography.ts';
 
@@ -29,6 +58,12 @@ export default defineComponent({
     setup() {
         const password = ref<string>("");
         const apps = ref<App[]>([]);
+        const assets: object = reactive({
+            settingsLogo: <string>staticPath + 'icons/settings--white.png',
+            userLogo: <string>staticPath + 'icons/user--white.png',
+            passwordLogo: <string>staticPath + 'icons/key--white-v3.png',
+            webLogo: <string>staticPath + 'icons/globe--black.svg',
+        });
         
 
         /**
@@ -90,7 +125,8 @@ export default defineComponent({
         });
 
         return {
-            apps
+            apps,
+            assets,
         }
     },
 });
