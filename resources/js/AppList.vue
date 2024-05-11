@@ -49,8 +49,8 @@
 import { defineComponent, onMounted, ref, reactive } from 'vue';
 import { staticPath } from './config';
 import { App } from './components/interfaces.ts';
-import { decryptAES } from './components/cryptography.ts';
 import { getApps } from './components/appCRUD.ts'
+import { decryptApps } from './components/appCrypto.ts'
 import { getMasterPassword, copyToClipboard } from './components/utils.ts';
 
 export default defineComponent({
@@ -63,25 +63,6 @@ export default defineComponent({
             passwordLogo: <string>staticPath + 'icons/key--white-v3.png',
             webLogo: <string>staticPath + 'icons/globe--black.svg',
         });
-        
-        /**
-         * Decrypts Array of Apps, and credentials found in each app.
-         * @param { App[] } encryptedApps - Array of Apps with encrypted name and credentials
-         * @param {string} key - Decryption key
-         * @returns { App[] } Decrypted Apps
-         */
-        function decryptApps(encryptedApps:App[], key: string): App[] {
-            let decryptedApps:App[] = [];
-            encryptedApps.forEach(app => {
-                app.name = decryptAES(app.name, key);
-                app.credentials.forEach(credential => {
-                    credential.username = decryptAES(credential.username, key);
-                    credential.password = decryptAES(credential.password, key);
-                })
-                decryptedApps.push(app);
-            });
-            return decryptedApps;
-        }
 
         async function getData(): Promise<void>{
             password.value = getMasterPassword();
