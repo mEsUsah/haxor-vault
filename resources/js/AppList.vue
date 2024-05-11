@@ -47,16 +47,15 @@ export default defineComponent({
             }
         }
 
-        async function getApps(): Promise<string>{
+        async function getApps(): Promise<App[]>{
             return new Promise((resolve, reject) => {
-                axios.get(api_host + api_apps, { withCredentials: true })
+                axios.get(api_host + api_apps)
                     .then(response => {
                         if(response.status == 200){
-                            apps.value = response.data;
-                            resolve('done');
+                            resolve(response.data);
                         }
                     }).catch(error => {
-                        reject('failed');
+                        reject('Failed to get apps from the API');
                     });
             }); 
         }
@@ -67,7 +66,7 @@ export default defineComponent({
          * @param {string} key - Decryption key
          * @returns { App[] } Decrypted Apps
          */
-        function decrypteApps(encryptedApps:App[], key: string): App[] {
+        function decryptApps(encryptedApps:App[], key: string): App[] {
             let decryptedApps:App[] = [];
             encryptedApps.forEach(app => {
                 app.name = decryptAES(app.name, key);
@@ -82,8 +81,8 @@ export default defineComponent({
 
         async function getData(): Promise<void>{
             password.value = getPassword();
-            await getApps();
-            apps.value = decrypteApps(apps.value, password.value);
+            apps.value = await getApps();
+            apps.value = decryptApps(apps.value, password.value);
         }
 
         onMounted(() => {
