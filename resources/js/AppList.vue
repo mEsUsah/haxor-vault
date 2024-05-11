@@ -51,6 +51,7 @@ import { staticPath } from './config';
 import { App } from './components/interfaces.ts';
 import { decryptAES } from './components/cryptography.ts';
 import { getApps } from './components/appCRUD.ts'
+import { getMasterPassword, copyToClipboard } from './components/utils.ts';
 
 export default defineComponent({
     setup() {
@@ -63,23 +64,6 @@ export default defineComponent({
             webLogo: <string>staticPath + 'icons/globe--black.svg',
         });
         
-
-        /**
-         * Get master password from local storage in browser.
-         * 
-         * Redirects to logout page if not found.
-         * @returns password
-         */
-        function getMasterPassword(): string{
-            let password = localStorage.getItem("password");
-            if (password){
-                return password;
-            } else {
-                window.location.href = "/logout";
-                return "";
-            }
-        }
-
         /**
          * Decrypts Array of Apps, and credentials found in each app.
          * @param { App[] } encryptedApps - Array of Apps with encrypted name and credentials
@@ -97,15 +81,6 @@ export default defineComponent({
                 decryptedApps.push(app);
             });
             return decryptedApps;
-        }
-
-        function copyToClipboard(text){
-            navigator.clipboard.writeText(text)
-                .then(()=>{
-                    console.log("copied to clipboard:", text);
-                }).catch(error=>{
-                    console.log(error);
-                })
         }
 
         async function getData(): Promise<void>{
