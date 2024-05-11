@@ -17,12 +17,14 @@
                             class="app-item__credential-wrapper"
                             v-for="credential in app.credentials" 
                             :key="credential.id">
-                            <button class="button button--icon">
+                            <button class="button button--icon"
+                                @click="copyToClipboard(credential.username)">
                                 <img class="button__logo" 
                                     :src="assets.userLogo" 
                                     alt="user">
                             </button>
-                            <button class="button button--icon">
+                            <button class="button button--icon"
+                            @click="copyToClipboard(credential.password)">
                                 <img class="button__logo" 
                                     :src="assets.passwordLogo" 
                                     alt="password">
@@ -114,6 +116,15 @@ export default defineComponent({
             return decryptedApps;
         }
 
+        function copyToClipboard(text){
+            navigator.clipboard.writeText(text)
+                .then(()=>{
+                    console.log("copied to clipboard:", text);
+                }).catch(error=>{
+                    console.log(error);
+                })
+        }
+
         async function getData(): Promise<void>{
             password.value = getPassword();
             apps.value = await getApps();
@@ -127,6 +138,7 @@ export default defineComponent({
         return {
             apps,
             assets,
+            copyToClipboard,
         }
     },
 });
