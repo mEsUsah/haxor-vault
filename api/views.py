@@ -11,7 +11,7 @@ from api.serializers import AppTypeSerializer, \
     AppSerializer, AppsSerializer, \
     CredentialSerializer, CredentialsSerializer
 from vault.models import AppType, App, Credential
-from api.forms import AppForm
+from api.forms import AppForm, CredentialForm
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -140,12 +140,16 @@ def credential_list(request):
         return Response(serializer.data)
     
     if request.method == "POST":
-        data = JSONParser().parse(request)
-        data['user'] = request.user.id
-        serializer = CredentialsSerializer(data=data)
+        form = CredentialForm(request.POST)
+        if form.is_valid():
+            credential = form.save(commit=False)
+            if credential.app.user != request.user:
+                return JsonResponse({
+                    'message': "Not your app",
+                }, status=403)
+            credential.save()
 
-        if serializer.is_valid():
-            serializer.save()
+            serializer = CredentialSerializer(credential)
             return JsonResponse(serializer.data, status=201)
         else:
             return JsonResponse({
