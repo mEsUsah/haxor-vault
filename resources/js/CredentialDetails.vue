@@ -1,6 +1,7 @@
 <template>
     <CredentialForm
         :newCredential="true"
+        :credential="credential"
         :apps="apps"
         @saveCredential="saveCredential"
     ></CredentialForm>
@@ -43,6 +44,7 @@ export default defineComponent({
 
         return {
             apps,
+            credential,
             saveCredential,
         }
     }

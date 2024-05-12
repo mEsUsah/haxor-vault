@@ -1,7 +1,7 @@
 <template>
     <div class="form__wrapper">
         <div class="form__field">
-            <select name="apptype" v-model="credential.app">
+            <select name="apptype" v-model="credential.app.id">
                 <option value="" disabled>Select app:</option>
                 <option v-for="app in apps" :value="app.id">
                     {{ app.name }}
