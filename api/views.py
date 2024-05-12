@@ -157,7 +157,7 @@ def credential_list(request):
                 'errors': serializer.errors, 
             }, status=400)
 
-@api_view(['GET','PUT','DELETE'])
+@api_view(['GET','POST'])
 @permission_classes([IsAuthenticated])
 def credential_details(request, id):
     """
@@ -183,17 +183,22 @@ def credential_details(request, id):
         serializer = CredentialSerializer(credential)
         return Response(serializer.data)
     
-    if request.method == "PUT":
-        data = JSONParser().parse(request)
-        serializer = CredentialSerializer(credential, data=data)
+    if request.method == "POST":
+        form = CredentialForm(request.POST)
+        if form.is_valid():
+            credential = form.save(commit=False)
+            if credential.app.user != request.user:
+                return JsonResponse({
+                    'message': "Not your app",
+                }, status=403)
+            credential.save()
 
-        if serializer.is_valid():
-            serializer.save()
+            serializer = CredentialSerializer(credential)
             return JsonResponse(serializer.data, status=200)
         else:
             return JsonResponse({
                 'message': "Validation error",
-                'errors': serializer.errors, 
+                'errors': form.errors, 
             }, status=400)
     
     if request.method == "DELETE":
