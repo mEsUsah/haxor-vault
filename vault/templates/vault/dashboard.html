@@ -6,6 +6,10 @@
             <a href="{% url 'create-app' %}" class="button button--danger">&plus; Add app</a>
         </div>
         <hr>
-        <div id="vueAppsList"></div>
+        <div id="vueAppsList">
+            <div class="loader__wrapper">
+                <div class="loader loader--big-black"></div>
+            </div>
+        </div>
     </section>
 {% endblock content %}

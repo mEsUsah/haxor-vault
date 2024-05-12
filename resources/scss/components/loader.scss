@@ -1,0 +1,15 @@
+.loader{
+    &--big-black{
+        height: 100px;
+        width: 100px;
+        border: 5px solid #000;
+        border-bottom-color: transparent;
+        margin-bottom: 10px;
+    }
+    &__wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    }
+}
