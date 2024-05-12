@@ -16,11 +16,12 @@
                     alt="password">
             </button>
             <span class="app-item__credential-name">{{ credential?.username }}</span>
-            <button class="button button--danger button--icon">
+            <a class="button button--danger button--icon"
+                :href="getCredentialUrl(credential)">
                 <img class="button__logo" 
                     :src="assets.settingsLogo" 
                     alt="edit">
-            </button>
+            </a>
         </div>
     </div>
     <div class="app-item__footer">
@@ -48,9 +49,14 @@ export default defineComponent({
             passwordLogo: <string>staticPath + 'icons/key--white-v3.png',
         });
 
+        function getCredentialUrl(credential: Credential){
+            return "/credential/" + credential.id;
+        }
+
         return {
             assets,
-            copyToClipboard
+            getCredentialUrl,
+            copyToClipboard,
         }
     }
 });
