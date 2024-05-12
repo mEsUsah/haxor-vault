@@ -3,7 +3,7 @@ import { toRaw } from 'vue';
 import { Credential, CredentialSchema } from './interfaces.ts';
 import { api_host, api_credentials } from '../config.ts';
 import { getMasterPassword } from './utils.ts';
-import { encryptCredentialSchema } from './credentialCrypto.ts'
+import { encryptCredentialSchema, decryptCredential } from './credentialCrypto.ts'
 
 /**
  * Get user app from API
@@ -15,10 +15,9 @@ export async function getCredential(id: string): Promise<Credential>{
         axios.get(api_host + api_credentials + "/" + id)
             .then(response => {
                 if(response.status == 200){
-                    resolve(response.data);
-                    // let app: App = response.data;
-                    // app = decryptApp(app, getMasterPassword())
-                    // resolve(app);
+                    let credential: Credential = response.data;
+                    credential = decryptCredential(credential, getMasterPassword())
+                    resolve(credential);
                 }
             }).catch(error => {
                 reject('Failed to get credential from the API');
