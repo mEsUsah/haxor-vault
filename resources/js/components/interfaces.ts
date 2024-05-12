@@ -23,7 +23,7 @@ export interface CredentialSchema{
 }
 
 export interface Credential{
-    app: string,
+    app: App,
     id: string,
     password: string,
     username: string,
