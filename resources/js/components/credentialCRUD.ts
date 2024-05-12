@@ -52,3 +52,34 @@ export async function createCredential(data: CredentialSchema): Promise<Credenti
         });
     }); 
 }
+
+/**
+ * Update a user credential
+ * @param {string} id - Credential ID
+ * @param {CredentialSchema} data
+ * @returns {Promise<Credential>} Created credential object
+ */
+export async function updateCredential(id: string, data: CredentialSchema): Promise<Credential>{
+    return new Promise((resolve, reject) => {
+        const url = api_host + api_credentials + "/" + id;
+
+        // Escape reactivity to prevent form from showing encrypted data.
+        let formData = toRaw(data);
+        formData = encryptCredentialSchema(formData, getMasterPassword())
+
+        axios.post(url, formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => {
+            if(response.status == 200){
+                let credential = response.data;
+                credential = decryptCredential(credential, getMasterPassword());
+                resolve(credential);
+            }
+        }).catch(error => {
+            reject('Failed create app');
+        });
+    }); 
+}
