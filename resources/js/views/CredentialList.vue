@@ -1,7 +1,6 @@
 <template>
-    <div class="app-item__content">
-        <div
-            class="app-item__credential-wrapper"
+    <div v-if="credentials?.length" class="app-item__content">
+        <div class="app-item__credential-wrapper"
             v-for="credential in credentials" 
             :key="credential.id">
             <button class="button button--icon"

@@ -13,7 +13,6 @@
                         <a :href="getAppUrl(app)" class="button button--danger">Edit</a>
                     </div>
                     <CredentialList
-                        v-if="app.credentials.length > 0"
                         :credentials="app.credentials"
                     ></CredentialList>
                 </div>

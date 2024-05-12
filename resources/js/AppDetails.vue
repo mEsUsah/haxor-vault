@@ -11,8 +11,7 @@
         </AppForm>
         <div class="app-item__wrapper app-item__wrapper--standalone">
             <CredentialList
-            v-if="app?.credentials?.length > 0"
-            :credentials="app?.credentials"
+                :credentials="app?.credentials"
             ></CredentialList>
         </div>
         
