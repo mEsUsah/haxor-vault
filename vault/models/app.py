@@ -17,4 +17,4 @@ class App(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return str(self.user.username + " - " + self.apptype.name + " - " + self.name)
+        return str(self.user.username + " - " + self.apptype.name + " - " + str(self.id))
