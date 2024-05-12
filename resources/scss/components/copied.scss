@@ -1,0 +1,15 @@
+.copied::before{
+        content: "Copied to clipboard";
+        position: absolute;
+        background-color: #2d2d2d;
+        color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: 500;
+        bottom: 60%;
+        left: 60%;
+        z-index: 2;
+        height: fit-content;
+        width: fit-content;
+}

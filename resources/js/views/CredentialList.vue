@@ -4,16 +4,18 @@
             v-for="credential in credentials" 
             :key="credential.id">
             <button class="button button--icon"
-                @click="copyToClipboard(credential.username)">
+                @click="copyToClipboard(credential.username, 'button-username-' + credential.id)">
                 <img class="button__logo" 
                     :src="assets.userLogo" 
-                    alt="user">
+                    alt="user"
+                    :id="'button-username-' + credential.id">
             </button>
             <button class="button button--icon"
-            @click="copyToClipboard(credential.password)">
+            @click="copyToClipboard(credential.password, 'button-password-' + credential.id)">
                 <img class="button__logo" 
                     :src="assets.passwordLogo" 
-                    alt="password">
+                    alt="password"
+                    :id="'button-password-' + credential.id">
             </button>
             <span class="app-item__credential-name">{{ credential?.username }}</span>
             <a class="button button--danger button--icon"

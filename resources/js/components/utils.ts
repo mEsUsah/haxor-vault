@@ -18,11 +18,17 @@ export function getMasterPassword(): string{
  * Add text to OS clipboard
  * @param text - what to add to clipboard
  */
-export function copyToClipboard(text): void{
+export function copyToClipboard(text, elementId): void{
     navigator.clipboard.writeText(text)
         .then(()=>{
-            console.log("copied to clipboard:", text);
+            let element = document.getElementById(elementId);
+            element?.parentNode?.classList.add("copied");
+            setTimeout(()=>{
+                element?.parentNode?.classList.remove("copied");
+            }, 2000);
         }).catch(error=>{
             console.log(error);
-        })
+        });
+    
+    
 }
