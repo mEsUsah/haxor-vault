@@ -22,12 +22,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, onMounted, ref, reactive, computed } from 'vue';
-import { AppType, AppSchema } from '../components/interfaces.ts';
+import { defineComponent, PropType, onMounted, ref, reactive, computed, watch } from 'vue';
+import { AppType, App, AppSchema } from '../components/interfaces.ts';
 export default defineComponent({
     props: {
         appTypes: {
             type: Array as PropType<AppType[]>,
+            required: false
+        },
+        app: {
+            type: Object as PropType<App>,
             required: false
         }
     },
@@ -40,6 +44,13 @@ export default defineComponent({
             apptype: "",
             csrfmiddlewaretoken: csrfToken
         });
+
+        watch(props, ()=>{
+            if(props.app){
+                app.name = props.app.name;
+                app.apptype = props.app.apptype.id;
+            }
+        })
         
         const disableSubmit = computed(()=>{
             return app.name == "" || app.apptype == "";
