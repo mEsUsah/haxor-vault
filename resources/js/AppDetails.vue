@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, reactive, computed } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import { getAppTypes } from './components/appTypeCRUD.ts';
 import { getApp, updateApp, deleteApp } from './components/appCRUD.ts'
 import { App, AppType, AppSchema } from './components/interfaces.ts';

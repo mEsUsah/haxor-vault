@@ -65,13 +65,17 @@ export default defineComponent({
                 credential.password = props.credential.password;
                 credential.app = props.credential.app.id;
             }
-        })
+            // Get app id from url param, if the app is not set.
+            if(props.apps && !credential.app){
+                credential.app = getAppFromUrl();
+            }
+        });
         
         const disableSubmit = computed(()=>{
             return credential.username == "" 
                 || credential.password == ""
                 || credential.app == "";
-        })
+        });
 
         function saveCredential(){
             if(!disableSubmit.value){
@@ -81,6 +85,17 @@ export default defineComponent({
 
         function destroyCredential(){
             ctx.emit("destroyCredential", credential)
+        }
+
+        function getAppFromUrl(): string {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const app = urlParams.get('app')
+            if(app){
+                return app;
+            } else {
+                return ""
+            }
         }
 
         return {
