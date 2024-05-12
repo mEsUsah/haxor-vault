@@ -5,8 +5,14 @@
                 <div class="app-item__wrapper">
                     <div class="app-item__headline">
                         <div class="app-item__icon">
-                            <img class="button__logo" 
+                            <img v-if="app.apptype.name == 'Website'" class="app-item__icon-img--web" 
                                 :src="assets.webLogo" 
+                                alt="user">
+                            <img v-if="app.apptype.name == 'Game'" class="app-item__icon-img--game" 
+                                :src="assets.gameLogo" 
+                                alt="user">
+                            <img v-if="app.apptype.name == 'Mobile app'" class="app-item__icon-img--mobile" 
+                                :src="assets.mobileLogo" 
                                 alt="user">
                         </div>
                         <span class="app-item__title">{{ app.name }}</span>
@@ -40,6 +46,8 @@ export default defineComponent({
         const apps = ref<App[]>([]);
         const assets: object = reactive({
             webLogo: <string>staticPath + 'icons/globe--black.svg',
+            gameLogo: <string>staticPath + 'icons/game--black.png',
+            mobileLogo: <string>staticPath + 'icons/mobile--black.png',
         });
 
         function getAppUrl(app: App){

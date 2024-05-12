@@ -13,9 +13,23 @@
         width: 50px;
         border-radius: 6px;
         background-color: white;
-        img{
-            height: 50px;
-            width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &-img{
+            &--web{
+                height: 50px;
+                width: 50px;
+            }
+            &--mobile{
+                height: 30px;
+                width: 30px;
+            }
+            &--game{
+                height: 30px;
+                width: 30px;
+                padding-bottom: 6px;
+            }
         }
     }
     &__headline{
