@@ -6,3 +6,4 @@
 - [ ] Sort credentials alphabetically
 - [ ] Sort apps aplhabetically
 - [ ] Add loading animation
+- [ ] Create user functionality
