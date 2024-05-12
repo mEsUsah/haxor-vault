@@ -10,7 +10,7 @@
                                 alt="user">
                         </div>
                         <span class="app-item__title">{{ app.name }}</span>
-                        <a href="#" class="button button--danger">Edit</a>
+                        <a :href="getAppUrl(app)" class="button button--danger">Edit</a>
                     </div>
                     <div v-if="app.credentials.length > 0" class="app-item__content">
                         <div 
@@ -46,7 +46,7 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref, reactive } from 'vue';
+import { defineComponent, onMounted, ref, reactive, computed } from 'vue';
 import { staticPath } from './config';
 import { App } from './components/interfaces.ts';
 import { getApps } from './components/appCRUD.ts'
@@ -63,6 +63,10 @@ export default defineComponent({
             webLogo: <string>staticPath + 'icons/globe--black.svg',
         });
 
+        function getAppUrl(app: App){
+            return `/app/${app.id}`;
+        }
+
         async function getData(): Promise<void>{
             password.value = getMasterPassword();
             apps.value = await getApps();
@@ -76,6 +80,7 @@ export default defineComponent({
             apps,
             assets,
             copyToClipboard,
+            getAppUrl,
         }
     },
 });
