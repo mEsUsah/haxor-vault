@@ -109,7 +109,7 @@ export async function updateApp(id: string, data: AppSchema): Promise<App>{
  * Delete a user app
  * @param {string} id - App ID
  * @param {AppSchema} data - App data
- * @returns {Promise<string>} Updated app object
+ * @returns {Promise<string>} Status string
  */
 export async function deleteApp(id: string, data: AppSchema): Promise<String>{
     return new Promise((resolve, reject) => {
