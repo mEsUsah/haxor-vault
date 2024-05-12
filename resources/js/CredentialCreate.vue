@@ -27,7 +27,7 @@ export default defineComponent({
             createCredential(credential)
                 .then((result: Credential) => {
                     console.log(result);
-                    // window.location.href = "/credential/" + result.id;
+                    window.location.href = "/credential/" + result.id;
                 })
                 .catch(error=>{
                     console.log(error);
