@@ -184,7 +184,7 @@ def credential_details(request, id):
         return Response(serializer.data)
     
     if request.method == "POST":
-        form = CredentialForm(request.POST)
+        form = CredentialForm(request.POST,  instance=credential)
         if form.is_valid():
             credential = form.save(commit=False)
             if credential.app.user != request.user:
