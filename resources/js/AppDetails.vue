@@ -14,6 +14,9 @@
             <CredentialList
                 :credentials="app?.credentials"
             ></CredentialList>
+            <AppItemFooter
+                :app="app"
+            ></AppItemFooter>
         </div>
         
     </section>
@@ -26,11 +29,13 @@ import { getApp, updateApp, deleteApp } from './components/appCRUD.ts'
 import { App, AppType, AppSchema } from './components/interfaces.ts';
 import AppForm from './views/AppForm.vue'
 import CredentialList from './views/CredentialList.vue';
+import AppItemFooter from './views/AppItemFooter.vue'
 
 export default defineComponent({
     components: {
         AppForm,
-        CredentialList
+        CredentialList,
+        AppItemFooter
     },
     setup() {
         const app = ref<App>()

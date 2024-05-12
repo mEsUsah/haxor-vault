@@ -24,13 +24,10 @@
             </a>
         </div>
     </div>
-    <div class="app-item__footer">
-        <a href="#" class="button button--danger">&plus; Add credential</a>
-    </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, onMounted, ref, reactive, computed } from 'vue';
+import { defineComponent, PropType, reactive } from 'vue';
 import { staticPath } from '../config.ts';
 import { copyToClipboard } from '../components/utils.ts';
 import { Credential } from '../components/interfaces.ts';

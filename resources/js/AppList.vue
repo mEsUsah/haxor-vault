@@ -15,6 +15,9 @@
                     <CredentialList
                         :credentials="app.credentials"
                     ></CredentialList>
+                    <AppItemFooter
+                        :app="app"
+                    ></AppItemFooter>
                 </div>
             </div>
         </div>
@@ -26,10 +29,12 @@ import { staticPath } from './config.ts';
 import { App } from './components/interfaces.ts';
 import { getApps } from './components/appCRUD.ts'
 import CredentialList from './views/CredentialList.vue';
+import AppItemFooter from './views/AppItemFooter.vue'
 
 export default defineComponent({
     components: {
-        CredentialList
+        CredentialList,
+        AppItemFooter
     },
     setup() {
         const apps = ref<App[]>([]);
