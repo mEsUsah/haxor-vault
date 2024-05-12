@@ -4,17 +4,18 @@
     </div>
     <hr>
     <CredentialForm
-        :newCredential="true"
+        :newCredential="false"
         :credential="credential"
         :apps="apps"
         @saveCredential="saveCredential"
+        @destroyCredential="destroyCredential"
     ></CredentialForm>
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, ref, reactive, computed } from 'vue';
 import { CredentialSchema, Credential, AppType } from './components/interfaces.ts';
 import { getApps } from './components/appCRUD.ts';
-import { getCredential, updateCredential } from './components/credentialCRUD.ts';
+import { getCredential, updateCredential, deleteCredential } from './components/credentialCRUD.ts';
 import CredentialForm from './views/CredentialForm.vue';
 
 export default defineComponent({
@@ -30,11 +31,21 @@ export default defineComponent({
             apps.value = await getApps();
         }
 
-        function saveCredential(CredentialSchema: CredentialSchema){
-            updateCredential(credentialId, CredentialSchema)
+        function saveCredential(credentialSchema: CredentialSchema){
+            updateCredential(credentialId, credentialSchema)
                 .then((result: Credential) => {
                     console.log(result);
                     credential.value = result;
+                })
+                .catch(error=>{
+                    console.log(error);
+                });
+        }
+
+        function destroyCredential(credentialSchema: CredentialSchema){
+            deleteCredential(credentialId, credentialSchema)
+                .then((result: String) => {
+                    window.location.href = "/dashboard";
                 })
                 .catch(error=>{
                     console.log(error);
@@ -49,6 +60,7 @@ export default defineComponent({
             apps,
             credential,
             saveCredential,
+            destroyCredential,
         }
     }
 });
