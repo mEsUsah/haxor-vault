@@ -87,7 +87,6 @@ export async function updateApp(id: string, data: AppSchema): Promise<App>{
         // Escape reactivity to prevent form from showing encrypted data.
         let formData = toRaw(data);
         formData = encrypteAppSchema(formData, getMasterPassword())
-        console.log(formData);
 
         axios.post(url, formData, {
             withCredentials: true,
@@ -99,6 +98,35 @@ export async function updateApp(id: string, data: AppSchema): Promise<App>{
                 let app: App = response.data;
                 app = decryptApp(app, getMasterPassword())
                 resolve(app);
+            }
+        }).catch(error => {
+            reject('Failed create app');
+        });
+    }); 
+}
+
+/**
+ * Delete a user app
+ * @param {string} id - App ID
+ * @param {AppSchema} data - App data
+ * @returns {Promise<string>} Updated app object
+ */
+export async function deleteApp(id: string, data: AppSchema): Promise<String>{
+    return new Promise((resolve, reject) => {
+        const url = api_host + api_apps + "/" + id + "/delete";
+
+        // Escape reactivity to prevent form from showing encrypted data.
+        let formData = toRaw(data);
+        formData = encrypteAppSchema(formData, getMasterPassword())
+
+        axios.post(url, formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => {
+            if(response.status == 200){
+                resolve("App deleted");
             }
         }).catch(error => {
             reject('Failed create app');
