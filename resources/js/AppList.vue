@@ -12,54 +12,29 @@
                         <span class="app-item__title">{{ app.name }}</span>
                         <a :href="getAppUrl(app)" class="button button--danger">Edit</a>
                     </div>
-                    <div v-if="app.credentials.length > 0" class="app-item__content">
-                        <div 
-                            class="app-item__credential-wrapper"
-                            v-for="credential in app.credentials" 
-                            :key="credential.id">
-                            <button class="button button--icon"
-                                @click="copyToClipboard(credential.username)">
-                                <img class="button__logo" 
-                                    :src="assets.userLogo" 
-                                    alt="user">
-                            </button>
-                            <button class="button button--icon"
-                            @click="copyToClipboard(credential.password)">
-                                <img class="button__logo" 
-                                    :src="assets.passwordLogo" 
-                                    alt="password">
-                            </button>
-                            <span class="app-item__credential-name">{{ credential?.username }}</span>
-                            <button class="button button--danger button--icon">
-                                <img class="button__logo" 
-                                    :src="assets.settingsLogo" 
-                                    alt="edit">
-                            </button>
-                        </div>
-                    </div>
-                    <div class="app-item__footer">
-                        <a href="#" class="button button--danger">&plus; Add credential</a>
-                    </div>
+                    <CredentialList
+                        v-if="app.credentials.length > 0"
+                        :credentials="app.credentials"
+                    ></CredentialList>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref, reactive, computed } from 'vue';
-import { staticPath } from './config';
+import { defineComponent, onMounted, ref, reactive } from 'vue';
+import { staticPath } from './config.ts';
 import { App } from './components/interfaces.ts';
 import { getApps } from './components/appCRUD.ts'
-import { getMasterPassword, copyToClipboard } from './components/utils.ts';
+import CredentialList from './views/CredentialList.vue';
 
 export default defineComponent({
+    components: {
+        CredentialList
+    },
     setup() {
-        const password = ref<string>("");
         const apps = ref<App[]>([]);
         const assets: object = reactive({
-            settingsLogo: <string>staticPath + 'icons/settings--white.png',
-            userLogo: <string>staticPath + 'icons/user--white.png',
-            passwordLogo: <string>staticPath + 'icons/key--white-v3.png',
             webLogo: <string>staticPath + 'icons/globe--black.svg',
         });
 
@@ -68,7 +43,6 @@ export default defineComponent({
         }
 
         async function getData(): Promise<void>{
-            password.value = getMasterPassword();
             apps.value = await getApps();
         }
 
@@ -79,7 +53,6 @@ export default defineComponent({
         return {
             apps,
             assets,
-            copyToClipboard,
             getAppUrl,
         }
     },
