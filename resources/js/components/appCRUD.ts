@@ -5,6 +5,10 @@ import { decryptApps, encrypteAppSchema } from './appCrypto.ts'
 import { getMasterPassword } from './utils.ts';
 import { toRaw } from 'vue';
 
+/**
+ * Get all user apps from API
+ * @returns {Promise<App[]>} - Promise with decrypted apps
+ */
 export async function getApps(): Promise<App[]>{
     return new Promise((resolve, reject) => {
         axios.get(api_host + api_apps)
@@ -19,6 +23,11 @@ export async function getApps(): Promise<App[]>{
     }); 
 }
 
+/**
+ * Create an user app
+ * @param {AppSchema} data
+ * @returns {Promise<App>} Created app object
+ */
 export async function createApp(data: AppSchema): Promise<App>{
     return new Promise((resolve, reject) => {
         const url = api_host + api_apps;
