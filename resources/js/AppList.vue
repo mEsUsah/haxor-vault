@@ -50,7 +50,6 @@ import { defineComponent, onMounted, ref, reactive } from 'vue';
 import { staticPath } from './config';
 import { App } from './components/interfaces.ts';
 import { getApps } from './components/appCRUD.ts'
-import { decryptApps } from './components/appCrypto.ts'
 import { getMasterPassword, copyToClipboard } from './components/utils.ts';
 
 export default defineComponent({
