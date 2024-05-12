@@ -25,8 +25,8 @@ export default defineComponent({
 
         function saveApp(app: AppSchema){
             createApp(app)
-                .then(result => {
-                    console.log(result);
+                .then((result: App) => {
+                    window.location.href = "/app/" + result.id;
                 })
                 .catch(error=>{
                     console.log(error);
