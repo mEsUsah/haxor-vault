@@ -52,7 +52,7 @@ def app_list(request):
                 'errors': serializer.errors, 
             }, status=400)
 
-@api_view(['GET','PUT','DELETE'])
+@api_view(['GET','POST','DELETE'])
 @permission_classes([IsAuthenticated])
 def app_details(request, id):
     """
@@ -78,13 +78,14 @@ def app_details(request, id):
         serializer = AppSerializer(app)
         return Response(serializer.data)
     
-    if request.method == "PUT":
-        data = JSONParser().parse(request)
-        data['user'] = request.user.id
-        serializer = AppSerializer(app, data=data)
+    if request.method == "POST":
+        form = AppForm(request.POST, instance=app)
+        if form.is_valid():
+            app = form.save(commit=False)
+            app.user = request.user
+            app.save()
 
-        if serializer.is_valid():
-            serializer.save()
+            serializer = AppSerializer(app)
             return JsonResponse(serializer.data, status=200)
         else:
             return JsonResponse({
