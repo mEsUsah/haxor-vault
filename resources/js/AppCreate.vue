@@ -1,5 +1,6 @@
 <template>
     <AppForm
+        :newApp="true"
         :appTypes="appTypes"
         @saveApp="saveApp"
     ></AppForm>

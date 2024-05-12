@@ -17,6 +17,10 @@
                 @click="saveApp"
                 type="submit" class="button">Save</button>
             <a href="/dashboard" class="button button--nautral">Cancel</a>
+            <button class="button button--danger"
+                v-if="!newApp"
+                @click="destroyApp"
+            >Delete</button>
         </div>
     </div>
 </template>
@@ -33,10 +37,16 @@ export default defineComponent({
         app: {
             type: Object as PropType<App>,
             required: false
+        },
+        newApp: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
     emits: [
-        'saveApp'
+        'saveApp',
+        'destroyApp'
     ],
     setup(props, ctx) {
         const app: AppSchema = reactive({
@@ -62,10 +72,15 @@ export default defineComponent({
             }
         }
 
+        function destroyApp(){
+            ctx.emit("destroyApp", app)
+        }
+
         return {
             app,
             disableSubmit,
-            saveApp
+            saveApp,
+            destroyApp
         }
     }
 });

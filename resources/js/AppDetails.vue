@@ -7,7 +7,8 @@
         <AppForm
             :app="app"
             :appTypes="appTypes"
-            @saveApp="saveApp">
+            @saveApp="saveApp"
+            @destroyApp="destroyApp">
         </AppForm>
         <div class="app-item__wrapper app-item__wrapper--standalone">
             <CredentialList
@@ -21,7 +22,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, reactive, computed } from 'vue';
 import { getAppTypes } from './components/appTypeCRUD.ts';
-import { getApp, updateApp } from './components/appCRUD.ts'
+import { getApp, updateApp, deleteApp } from './components/appCRUD.ts'
 import { App, AppType, AppSchema } from './components/interfaces.ts';
 import AppForm from './views/AppForm.vue'
 import CredentialList from './views/CredentialList.vue';
@@ -50,6 +51,16 @@ export default defineComponent({
                 });
         }
 
+        function destroyApp(appSchema: AppSchema){
+            deleteApp(appId, appSchema)
+                .then((result: String) => {
+                    window.location.href = "/dashboard";
+                })
+                .catch(error=>{
+                    console.log(error);
+                });
+        }
+
         onMounted(()=>{
             getData();
         });
@@ -57,7 +68,8 @@ export default defineComponent({
         return {
             app,
             appTypes,
-            saveApp
+            saveApp,
+            destroyApp
         }
     }
 })
