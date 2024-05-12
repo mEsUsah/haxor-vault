@@ -1,8 +1,9 @@
 import { createApp } from 'vue';
 import AppList from './AppList.vue';
+import AppCreate from './AppCreate.vue';
 import AppDetails from './AppDetails.vue';
-import CreateApp from './AppCreate.vue';
-import CreateCredential from './CredentialCreate.vue';
+import CredentialCreate from './CredentialCreate.vue';
+import CredentialDetails from './CredentialDetails.vue';
 
 // Dashboard
 const appListMountPoint = document.getElementById("vueAppsList");
@@ -14,19 +15,24 @@ if(appListMountPoint){
 // Apps
 const appCreateMountPoint = document.getElementById("vueAppCreate");
 if(appCreateMountPoint){
-    const appForm = createApp(CreateApp);
+    const appForm = createApp(AppCreate);
     appForm.mount(appCreateMountPoint);
 }
 
 const appDetailsMountPoint = document.getElementById("vueAppDetails");
 if(appDetailsMountPoint){
-    const appForm = createApp(AppDetails);
-    appForm.mount(appDetailsMountPoint);
+    const appDetails = createApp(AppDetails);
+    appDetails.mount(appDetailsMountPoint);
 }
 
 // Credentials
 const credentialCreateMountPoint = document.getElementById("vueCredentialCreate");
 if(credentialCreateMountPoint){
-    const credentialForm = createApp(CreateCredential);
+    const credentialForm = createApp(CredentialCreate);
     credentialForm.mount(credentialCreateMountPoint);
+}
+const credentialDetailMountPoint = document.getElementById("vueCredentialDetails");
+if(credentialDetailMountPoint){
+    const credentialDetails = createApp(CredentialDetails);
+    credentialDetails.mount(credentialDetailMountPoint);
 }
