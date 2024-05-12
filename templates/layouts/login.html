@@ -29,7 +29,7 @@
 
     <script>const csrfToken = "{{ csrf_token }}";</script>
     {% if USE_S3 %}
-        <script src="{% static '' %}{{s3_file_js_login}}"></script>
+        <script type="module" src="{% static '' %}{{s3_file_js_login}}"></script>
     {% else %}
         {% vite 'resources/js/login.ts' %}
     {% endif %}
