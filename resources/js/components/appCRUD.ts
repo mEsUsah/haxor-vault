@@ -27,6 +27,26 @@ export async function getApps(): Promise<App[]>{
 }
 
 /**
+ * Get user app from API
+ * @param {string} id - App id
+ * @returns {Promise<App>} - Promise with decrypted apps
+ */
+export async function getApp(id: string): Promise<App>{
+    return new Promise((resolve, reject) => {
+        axios.get(api_host + api_apps + "/" + id)
+            .then(response => {
+                if(response.status == 200){
+                    let app: App = response.data;
+                    app = decryptApp(app, getMasterPassword())
+                    resolve(app);
+                }
+            }).catch(error => {
+                reject('Failed to get app from the API');
+            });
+    }); 
+}
+
+/**
  * Create an user app
  * @param {AppSchema} data
  * @returns {Promise<App>} Created app object
