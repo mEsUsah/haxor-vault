@@ -52,11 +52,11 @@ def app_list(request):
                 'errors': serializer.errors, 
             }, status=400)
 
-@api_view(['GET','POST','DELETE'])
+@api_view(['GET','POST'])
 @permission_classes([IsAuthenticated])
 def app_details(request, id):
     """
-    Retrieve, update or delete a user app.
+    Retrieve or update a user app.
     """
     try:
         app = App.objects.get(pk=id)
@@ -94,6 +94,34 @@ def app_details(request, id):
             }, status=400)
         
     if request.method == "DELETE":
+        app.delete()
+        return JsonResponse({
+            'message': "Successfully Deleted",
+        }, status=200)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def app_delete(request, id):
+    """
+    Delete a user app.
+    """
+    try:
+        app = App.objects.get(pk=id)
+    except App.DoesNotExist:
+        return JsonResponse({
+            'message': "Not found",
+        }, status=404)
+    except ValidationError:
+        return JsonResponse({
+            'message': "invalid UUID",
+        }, status=400)
+    
+    if app.user != request.user:
+        return JsonResponse({
+            'message': "Not yours",
+        }, status=403)
+   
+    if request.method == "POST":
         app.delete()
         return JsonResponse({
             'message': "Successfully Deleted",
