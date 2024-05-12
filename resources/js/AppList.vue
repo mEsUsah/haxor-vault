@@ -67,7 +67,6 @@ export default defineComponent({
         async function getData(): Promise<void>{
             password.value = getMasterPassword();
             apps.value = await getApps();
-            apps.value = decryptApps(apps.value, password.value);
         }
 
         onMounted(() => {

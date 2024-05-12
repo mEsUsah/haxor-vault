@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { api_host, api_apps } from '../config.ts';
 import { App, AppSchema } from './interfaces.ts';
-import { encrypteAppSchema } from './appCrypto.ts'
+import { decryptApps, encrypteAppSchema } from './appCrypto.ts'
 import { getMasterPassword } from './utils.ts';
 import { toRaw } from 'vue';
 
@@ -10,7 +10,8 @@ export async function getApps(): Promise<App[]>{
         axios.get(api_host + api_apps)
             .then(response => {
                 if(response.status == 200){
-                    resolve(response.data);
+                    const apps = decryptApps(response.data, getMasterPassword())
+                    resolve(apps);
                 }
             }).catch(error => {
                 reject('Failed to get apps from the API');
