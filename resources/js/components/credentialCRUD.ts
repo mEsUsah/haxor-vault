@@ -83,3 +83,32 @@ export async function updateCredential(id: string, data: CredentialSchema): Prom
         });
     }); 
 }
+
+/**
+ * Delete a user credential
+ * @param {string} id - Credential ID
+ * @param {CredentialSchema} data
+ * @returns {Promise<string>} Created credential object
+ */
+export async function deleteCredential(id: string, data: CredentialSchema): Promise<String>{
+    return new Promise((resolve, reject) => {
+        const url = api_host + api_credentials + "/" + id + "/delete";
+
+        // Escape reactivity to prevent form from showing encrypted data.
+        let formData = toRaw(data);
+        formData = encryptCredentialSchema(formData, getMasterPassword())
+
+        axios.post(url, formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => {
+            if(response.status == 200){
+                resolve("Credential deleted");
+            }
+        }).catch(error => {
+            reject('Failed create app');
+        });
+    }); 
+}
