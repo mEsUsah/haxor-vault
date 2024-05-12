@@ -1,4 +1,8 @@
 <template>
+    <div class="section__hedline">
+        <h1>{{ credential?.username }}@{{ credential?.app.name }}</h1>
+    </div>
+    <hr>
     <CredentialForm
         :newCredential="true"
         :credential="credential"
@@ -10,7 +14,7 @@
 import { defineComponent, onMounted, ref, reactive, computed } from 'vue';
 import { CredentialSchema, Credential, AppType } from './components/interfaces.ts';
 import { getApps } from './components/appCRUD.ts';
-import { getCredential } from './components/credentialCRUD.ts';
+import { getCredential, updateCredential } from './components/credentialCRUD.ts';
 import CredentialForm from './views/CredentialForm.vue';
 
 export default defineComponent({
@@ -23,19 +27,18 @@ export default defineComponent({
         
         async function getData(): Promise<void>{
             credential.value = await getCredential(credentialId);
-            console.log(credential.value);
             apps.value = await getApps();
         }
 
-        function saveCredential(credential: CredentialSchema){
-            // createCredential(credential)
-            //     .then((result: Credential) => {
-            //         console.log(result);
-            //         window.location.href = "/credential/" + result.id;
-            //     })
-            //     .catch(error=>{
-            //         console.log(error);
-            //     });
+        function saveCredential(CredentialSchema: CredentialSchema){
+            updateCredential(credentialId, CredentialSchema)
+                .then((result: Credential) => {
+                    console.log(result);
+                    credential.value = result;
+                })
+                .catch(error=>{
+                    console.log(error);
+                });
         }
 
         onMounted(() => {
