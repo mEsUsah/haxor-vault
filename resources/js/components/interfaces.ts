@@ -10,6 +10,18 @@ export interface AuthenticationData {
     csrfmiddlewaretoken: string
 }
 
+export interface AppSchema{
+    name: string,
+    apptype: string,
+    csrfmiddlewaretoken: string,
+}
+export interface CredentialSchema{
+    username: string,
+    password: string,
+    app: string,
+    csrfmiddlewaretoken: string,
+}
+
 export interface Credential{
     app: string,
     id: string,
@@ -30,8 +42,3 @@ export interface App {
     user: number
 };
 
-export interface AppSchema{
-    name: string,
-    apptype: string,
-    csrfmiddlewaretoken: string,
-}
