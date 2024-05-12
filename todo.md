@@ -5,3 +5,4 @@
 - [ ] Add search functionality on dashboard
 - [ ] Sort credentials alphabetically
 - [ ] Sort apps aplhabetically
+- [ ] Add loading animation
