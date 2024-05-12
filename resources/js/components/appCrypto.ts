@@ -1,5 +1,5 @@
-import { App } from './interfaces.ts';
-import { decryptAES } from './cryptography.ts';
+import { App, AppSchema } from './interfaces.ts';
+import { encryptAES, decryptAES } from './cryptography.ts';
 
 /**
  * Decrypts Array of Apps, and credentials found in each app.
@@ -18,4 +18,16 @@ export function decryptApps(encryptedApps:App[], key: string): App[] {
         decryptedApps.push(app);
     });
     return decryptedApps;
+}
+
+
+/**
+ * Encrypts an AppSchema.
+ * @param { AppSchema } app - Plaintext App schema
+ * @param {string} key - Encryption key
+ * @returns { AppSchema } Encrypted App
+ */
+export function encrypteAppSchema(app:AppSchema, key: string): AppSchema{
+    app.name = encryptAES(app.name, key);
+    return app;
 }
