@@ -4,6 +4,9 @@
         background-color: $color-gray--medium;
         padding: 6px;
         border-radius: 8px;
+        &--standalone{
+            margin-top: 16px;
+        }
     }
     &__icon{
         height: 50px;

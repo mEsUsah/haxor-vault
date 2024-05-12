@@ -9,6 +9,12 @@
             :appTypes="appTypes"
             @saveApp="saveApp">
         </AppForm>
+        <div class="app-item__wrapper app-item__wrapper--standalone">
+            <CredentialList
+            v-if="app?.credentials?.length > 0"
+            :credentials="app?.credentials"
+            ></CredentialList>
+        </div>
         
     </section>
 </template>
@@ -19,10 +25,12 @@ import { getAppTypes } from './components/appTypeCRUD.ts';
 import { getApp, updateApp } from './components/appCRUD.ts'
 import { App, AppType, AppSchema } from './components/interfaces.ts';
 import AppForm from './views/AppForm.vue'
+import CredentialList from './views/CredentialList.vue';
 
 export default defineComponent({
     components: {
-        AppForm
+        AppForm,
+        CredentialList
     },
     setup() {
         const app = ref<App>()
@@ -30,7 +38,6 @@ export default defineComponent({
         
         async function getData(){
             app.value = await getApp(appId);
-            console.log(app);
             appTypes.value = await getAppTypes();
         }
 
