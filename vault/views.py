@@ -28,8 +28,8 @@ def create_credential(request):
 
 @login_required(login_url="login")
 def edit_credential(request, id):
-    app = Credential.objects.get(id=id)
+    credential = Credential.objects.get(id=id)
     context = {
-        'app': app
+        'credential': credential
     }
     return render(request, 'vault/credential_details.html', context)
