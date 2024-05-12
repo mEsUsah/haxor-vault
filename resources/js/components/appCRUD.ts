@@ -18,6 +18,15 @@ export async function getApps(): Promise<App[]>{
                     apps.forEach(app => {
                         app = decryptApp(app, getMasterPassword())
                     });
+
+                    // Sort apps by name
+                    apps.sort((a, b) => (a.name > b.name) ? 1 : -1);
+
+                    // Sort credentials by username
+                    apps.forEach(app => {
+                        app.credentials.sort((a, b) => (a.username > b.username) ? 1 : -1);
+                    });
+
                     resolve(apps);
                 }
             }).catch(error => {
@@ -38,6 +47,10 @@ export async function getApp(id: string): Promise<App>{
                 if(response.status == 200){
                     let app: App = response.data;
                     app = decryptApp(app, getMasterPassword())
+
+                    // Sort credentials by username
+                    app.credentials.sort((a, b) => (a.username > b.username) ? 1 : -1);
+   
                     resolve(app);
                 }
             }).catch(error => {
