@@ -200,8 +200,31 @@ def credential_details(request, id):
                 'message': "Validation error",
                 'errors': form.errors, 
             }, status=400)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def credential_delete(request, id):
+    """
+    Retrieve, update or delete a user credential.
+    """
+    try:
+        credential = Credential.objects.get(pk=id)
+    except Credential.DoesNotExist:
+        return JsonResponse({
+            'message': "Not found",
+        }, status=404)
+    except ValidationError:
+        return JsonResponse({
+            'message': "invalid UUID",
+        }, status=400)
     
-    if request.method == "DELETE":
+    if credential.app.user != request.user:
+        return JsonResponse({
+            'message': "Not yours",
+        }, status=403)
+
+    
+    if request.method == "POST":
         credential.delete()
         return JsonResponse({
             'message': "Successfully Deleted",
