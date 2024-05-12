@@ -1,7 +1,7 @@
 <template>
     <div class="form__wrapper">
         <div class="form__field">
-            <select name="apptype" v-model="credential.app.id">
+            <select name="apptype" v-model="credential.app">
                 <option value="" disabled>Select app:</option>
                 <option v-for="app in apps" :value="app.id">
                     {{ app.name }}
@@ -63,7 +63,7 @@ export default defineComponent({
             if(props.credential){
                 credential.username = props.credential.username;
                 credential.password = props.credential.password;
-                credential.app = props.credential.app;
+                credential.app = props.credential.app.id;
             }
         })
         
