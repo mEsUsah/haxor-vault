@@ -1,0 +1,77 @@
+{% extends "layouts/article.html" %}
+{% block content %}
+    <section>
+        <div class="section__hedline">
+            <div>
+                <h1>Vault Haxor</h1>
+                <p>Store your credentials safely in the cloud</p>
+            </div>
+            <div class="headline__buttons">
+                <button class="button button--vertical" disabled>Register</button>
+                <a href="{% url 'login' %}" class="button button--vertical ">Login</a>
+            </div>
+        </div>
+        <p>Vault Haxor is a simple credential management system inspired by 
+        LastPass, 1password and other similar solutions.</p>
+        <p>What makes Vault Haxor special, is that it's writte by me as a hobby
+        project, for my own use, and is designed to be as simple as possible, 
+        while maintaining confidentiality, integrity and (hopefully) avilability. 
+        Luckily for you, you can use the app for free.
+        </p>
+
+        <h2>Confidentiality</h2>
+        <p><strong>How does the app maintain confidentiality?</strong> 
+        It does so by using clientside cryptography on all data except user email. 
+        The only reason why your email is not encrypted is that the email will 
+        be used to send you critical information about updates that affects you.
+        </p>
+        <p><strong>How is clientside cryptography different from "normal" 
+        confidentiality?</strong>
+        Because I don't want to risk any potential databreach on my server where
+        an attacker could set up any sort of sniffer og logger to collect your 
+        authentication attemps, and thereby getting you passwords, and then use 
+        that password to decrypt your credentials, the app generates a hash of 
+        your password in your web browser and sends that hash to the server for 
+        authentication. This makes it impossible to an attacker to gain access to
+        your data without having access gained access to your password through 
+        hacking your computer or by performing phishin or any other sort of
+        social engineering attacks.
+        </p>
+        <p>Application names / website names, usernames and passwords are stored 
+        enctypted, and is only encrypted and decrypted in your web browser. 
+        This is done to make it impossible for me who runs the application, or 
+        anyone else who gain unauthorized access to sniff, or log any part of 
+        your stored credentials</p>
+        <p><strong>Hashing</strong> of the master password for authentication is
+        performed in the browser by using the Argon2 algorithm. To perform this
+        operation the open-source JavaScript library 
+        <a href="https://www.npmjs.com/package/argon2-browser">argon2-browser</a>
+        is used.</p>
+        <p><strong>Encryption</strong> of the credentials is performed in the 
+        browser by using the open-source JavaScript library
+        <a href="https://www.npmjs.com/package/crypto-js">crypto-js</a>.</p>
+
+        <h2>Integrity</h2>
+        <p><strong>How does the app maintain integrity?</strong>
+        The app maintains integrity by only allowing users to access and modify
+        their own credentials. This is done by using a token that is generated 
+        when you log in, and is stored in your web browser. This token is used
+        to authenticate you, and is only valid for a limited time. The token is
+        used to verify that you are are the one who is trying to access or modify
+        your credentials. If the token is missing, or is invalid, you will not be
+        able to access or modify your credentials. This token does not contain any
+        sensitive or personal identifiable information, and is only used to 
+        verify your identity.
+
+        <h2>Availability</h2>
+        <p><strong>But, what about availability? Can you trust that the app will
+         be running and available for use?</strong> I will try my best to
+        keep this project running, and having it available. The biggest incentive
+        for keeping it running, is that I use it myself. Since this is a 
+        non-commercial and free app with no quarantees at all, I will not under 
+        any cicumstances guarantee the availability of the application. 
+        Again, this is a hobby project, and not a commercial product. 
+        <strong> Do NOT excpect availability from this app like what you would 
+        excpect from a commercial product.</strong></p>
+    </section>
+{% endblock content %}

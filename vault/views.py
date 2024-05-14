@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from vault.models import App, Credential
 
-# Create your views here.
+def home(request):
+    context = {}
+    return render(request, 'vault/home.html', context)
+
 @login_required(login_url="login")
 def dashboard(request):
     context = {}
