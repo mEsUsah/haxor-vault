@@ -26,6 +26,12 @@ def login_user(request):
 
     return render(request, 'users/login.html')
 
+def register_user(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
+    return render(request, 'users/register.html')
+
 def logout_user(request):
     logout(request)
     return redirect('login')
