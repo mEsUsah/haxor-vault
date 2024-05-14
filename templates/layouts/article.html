@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load vite %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vault Haxor</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'safari-pinned-tab.svg' %}" color="#ea5252">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+
+
+    {% if USE_S3 %}
+        <link rel="stylesheet" href="{% static '' %}{{s3_file_css}}" />
+    {% else %}
+        {% vite %}
+        {% vite 'resources/scss/main.scss' %}
+    {% endif %}
+
+</head>
+<body class="body__inside">
+    {% include "parts/header.html" %}
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="message message--{{message.tags}}">
+                    <img class="message-icon" 
+                        src="{% static 'icons/warning.png' %}"  
+                        alt="">
+                    <p class="message__message">{{message}}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+</body>
+</html>
