@@ -9,6 +9,12 @@ export interface AuthenticationSchema {
     password: string,
     csrfmiddlewaretoken: string
 }
+export interface RegistrationSchema {
+    email: string,
+    password: string,
+    passwordConfirm: string,
+    csrfmiddlewaretoken: string
+}
 
 export interface AppSchema{
     name: string,
