@@ -28,6 +28,11 @@ export interface CredentialSchema{
     csrfmiddlewaretoken: string,
 }
 
+export interface ValidationResult{
+    message: StatusMessage,
+    success: boolean
+}
+
 export interface Credential{
     app: App,
     id: string,
