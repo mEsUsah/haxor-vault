@@ -28,6 +28,8 @@
 <script lang="ts">
 import { defineComponent, PropType, onMounted, ref, reactive, computed, watch } from 'vue';
 import { AppType, App, AppSchema } from '../components/interfaces.ts';
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
 export default defineComponent({
     props: {
         appTypes: {
@@ -52,7 +54,7 @@ export default defineComponent({
         const app: AppSchema = reactive({
             name: "",
             apptype: "",
-            csrfmiddlewaretoken: csrfToken
+            csrfmiddlewaretoken: csrfToken?csrfToken:""
         });
 
         watch(props, ()=>{

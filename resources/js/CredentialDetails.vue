@@ -18,6 +18,8 @@ import { getApps } from './components/appCRUD.ts';
 import { getCredential, updateCredential, deleteCredential } from './components/credentialCRUD.ts';
 import CredentialForm from './views/CredentialForm.vue';
 
+const credentialId = document.querySelector('meta[name="credential-id"]')?.getAttribute('content');
+
 export default defineComponent({
     components: {
         CredentialForm,
@@ -27,12 +29,12 @@ export default defineComponent({
         const apps = ref<AppType[]>();
         
         async function getData(): Promise<void>{
-            credential.value = await getCredential(credentialId);
+            credential.value = await getCredential(credentialId?credentialId:"");
             apps.value = await getApps();
         }
 
         function saveCredential(credentialSchema: CredentialSchema){
-            updateCredential(credentialId, credentialSchema)
+            updateCredential(credentialId?credentialId:"", credentialSchema)
                 .then((result: Credential) => {
                     console.log(result);
                     credential.value = result;
@@ -43,7 +45,7 @@ export default defineComponent({
         }
 
         function destroyCredential(credentialSchema: CredentialSchema){
-            deleteCredential(credentialId, credentialSchema)
+            deleteCredential(credentialId?credentialId:"", credentialSchema)
                 .then((result: String) => {
                     window.location.href = "/dashboard";
                 })

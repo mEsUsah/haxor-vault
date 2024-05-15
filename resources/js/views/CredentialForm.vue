@@ -31,6 +31,8 @@
 <script lang="ts">
 import { defineComponent, PropType, onMounted, ref, reactive, computed, watch } from 'vue';
 import { App, CredentialSchema } from '../components/interfaces.ts';
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
 export default defineComponent({
     props: {
         apps: {
@@ -56,7 +58,7 @@ export default defineComponent({
             username: "",
             password: "",
             app: "",
-            csrfmiddlewaretoken: csrfToken
+            csrfmiddlewaretoken: csrfToken?csrfToken:""
         });
 
         watch(props, ()=>{

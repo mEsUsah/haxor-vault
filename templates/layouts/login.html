@@ -14,6 +14,7 @@
     <link rel="mask-icon" href="{% static 'safari-pinned-tab.svg' %}" color="#ea5252">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+    <meta name="csrf-token" content="{{ csrf_token }}">
 
     {% if USE_S3 %}
         <link rel="stylesheet" href="{% static '' %}{{s3_file_css}}" />
@@ -27,7 +28,6 @@
     {% block content %}
     {% endblock content %}
 
-    <script>const csrfToken = "{{ csrf_token }}";</script>
     {% if USE_S3 %}
         <script type="module" src="{% static '' %}{{s3_file_js_login}}"></script>
     {% else %}

@@ -30,6 +30,7 @@ import { App, AppType, AppSchema } from './components/interfaces.ts';
 import AppForm from './views/AppForm.vue'
 import CredentialList from './views/CredentialList.vue';
 import AppItemFooter from './views/AppItemFooter.vue'
+const appId = document.querySelector('meta[name="app-id"]')?.getAttribute('content');
 
 export default defineComponent({
     components: {
@@ -42,12 +43,12 @@ export default defineComponent({
         const appTypes = ref<AppType[]>();
         
         async function getData(){
-            app.value = await getApp(appId);
+            app.value = await getApp(appId?appId:"");
             appTypes.value = await getAppTypes();
         }
 
         function saveApp(appSchema: AppSchema){
-            updateApp(appId, appSchema)
+            updateApp(appId?appId:"", appSchema)
                 .then((result:App) => {
                     app.value = result;
                 })
@@ -57,7 +58,7 @@ export default defineComponent({
         }
 
         function destroyApp(appSchema: AppSchema){
-            deleteApp(appId, appSchema)
+            deleteApp(appId?appId:"", appSchema)
                 .then((result: String) => {
                     window.location.href = "/dashboard";
                 })

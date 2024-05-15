@@ -1,6 +1,9 @@
 {% extends "layouts/main.html" %}
+
+{% block head %}
+    <meta name="app-id" content="{{app.id}}">
+{% endblock head %}
 {% block content %}
-    <script>const appId = "{{app.id}}";</script>
     <section id="vueAppDetails">
         <div class="loader__wrapper">
             <div class="loader loader--big-black"></div>

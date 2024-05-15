@@ -30,8 +30,10 @@ import { defineComponent, reactive, ref } from 'vue';
 import StatusMessageBox from './views/MessageBox.vue';
 import { staticPath } from './config';
 import { animateElementShake } from './components/animations';
-import { authenticate } from './components/authenticate';
+import { authenticate } from './components/userAuthenticate.ts';
 import {StatusMessage, AuthenticationData} from './components/interfaces.ts';
+
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
 export default defineComponent({
     components: {
@@ -51,7 +53,7 @@ export default defineComponent({
             await authenticate(<AuthenticationData>{
                 username: username.value,
                 password: password.value,
-                csrfmiddlewaretoken: csrfToken
+                csrfmiddlewaretoken: csrfToken?csrfToken:"",
             }).then(() => {
                 statusMessage.value = {
                     type: "success",
