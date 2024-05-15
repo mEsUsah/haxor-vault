@@ -31,7 +31,7 @@ import StatusMessageBox from './views/MessageBox.vue';
 import { staticPath } from './config';
 import { animateElementShake } from './components/animations';
 import { authenticate } from './components/userAuthenticate.ts';
-import {StatusMessage, AuthenticationData} from './components/interfaces.ts';
+import {StatusMessage, AuthenticationSchema} from './components/interfaces.ts';
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
@@ -50,7 +50,7 @@ export default defineComponent({
         async function login(event:Event): Promise<void> {
             event.preventDefault();
             
-            await authenticate(<AuthenticationData>{
+            await authenticate(<AuthenticationSchema>{
                 username: username.value,
                 password: password.value,
                 csrfmiddlewaretoken: csrfToken?csrfToken:"",

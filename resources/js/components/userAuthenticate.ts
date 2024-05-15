@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { hashArgon2 } from './cryptography.ts';
-import { AuthenticationData } from './interfaces.ts';
+import { AuthenticationSchema } from './interfaces.ts';
 
 const url = "/login";
 
@@ -15,7 +15,7 @@ const url = "/login";
  * @param {AuthenticationInterface} data - Data that will be passed to the API.
  * @returns {Promise<string>} Promise with status string.
  */
-export async function authenticate(data: AuthenticationData): Promise<string> {
+export async function authenticate(data: AuthenticationSchema): Promise<string> {
     let passwordClearText = data.password;
     let passwordHash: string = await hashArgon2(passwordClearText);
     data.password = passwordHash;

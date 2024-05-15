@@ -4,7 +4,7 @@ export interface StatusMessage {
     text: string,
 }
 
-export interface AuthenticationData {
+export interface AuthenticationSchema {
     username: string,
     password: string,
     csrfmiddlewaretoken: string
