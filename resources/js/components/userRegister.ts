@@ -5,14 +5,10 @@ import { RegistrationSchema } from './interfaces.ts';
 const url = "/register";
 
 /**
- * Authenticates using front-end password hashing, and passes the hash
+ * Registers user using front-end password hashing, and passes the hashes
  * to the backend endpoint.
  * 
- * If successfully authenticated, the session cookie will be set, and 
- * cleartext password will be stored in localstorage. Password is stored in 
- * localstorage for ease of encrypting and decrypting secrets once authenticated.
- * 
- * @param {AuthenticationInterface} data - Data that will be passed to the API.
+ * @param {RegistrationSchema} data - Data that will be passed to the API.
  * @returns {Promise<string>} Promise with status string.
  */
 export async function registerUser(data: RegistrationSchema): Promise<string> {
