@@ -14,7 +14,7 @@ export function validateRegistrationSchema(schema: RegistrationSchema): Validati
         };
     }
 
-    if(schema.password == "" || schema.passwordConfirm == ""){
+    if(schema.password.trim() == "" || schema.passwordConfirm.trim() == ""){
         return {
             message: <StatusMessage>{
                 type: "error",
