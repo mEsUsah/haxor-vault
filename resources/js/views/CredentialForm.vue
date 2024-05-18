@@ -1,5 +1,5 @@
 <template>
-    <div class="form__wrapper">
+    <form class="form__wrapper">
         <div class="form__field">
             <select name="apptype" v-model="credential.app">
                 <option value="" disabled>Select app:</option>
@@ -9,10 +9,10 @@
             </select>
         </div>
         <div class="form__field">
-            <input v-model="credential.username" type="text" name="username" placeholder="Username">
+            <input v-model="credential.username" type="text" name="username" placeholder="Username" maxlength="100">
         </div>
         <div class="form__field">
-            <input v-model="credential.password" type="password" name="password" placeholder="Password">
+            <input v-model="credential.password" type="password" name="password" placeholder="Password" maxlength="100">
         </div>
         <div class="form__buttons">
             <button 
@@ -20,17 +20,18 @@
                 @click="saveCredential"
                 type="submit" class="button">Save</button>
             <a href="/dashboard" class="button button--nautral">Back</a>
-            <button class="button button--danger"
+            <a class="button button--danger"
                 v-if="!newCredential"
                 @click="destroyCredential"
-            >Delete</button>
+            >Delete</a>
         </div>
-    </div>
+    </form>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, onMounted, ref, reactive, computed, watch } from 'vue';
 import { App, CredentialSchema } from '../components/interfaces.ts';
+import { validateCredentialSchema } from '../components/validateCredentialSchema.ts';
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
 export default defineComponent({
@@ -74,13 +75,12 @@ export default defineComponent({
         });
         
         const disableSubmit = computed(()=>{
-            return credential.username.trim() == "" 
-                || credential.password.trim() == ""
-                || credential.app.trim() == "";
+            return !validateCredentialSchema(credential);
         });
 
-        function saveCredential(){
-            if(!disableSubmit.value){
+        function saveCredential(event: Event){
+            event.preventDefault();
+            if(validateCredentialSchema(credential)){
                 ctx.emit("saveCredential", credential);
             }
         }
