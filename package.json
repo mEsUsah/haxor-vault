@@ -13,6 +13,7 @@
         "django-vite-plugin": "^4.0.0",
         "sass": "^1.75.0",
         "typescript": "^5.4.5",
-        "vue": "^3.4.26"
+        "vue": "^3.4.26",
+        "vue-recaptcha-v3": "^2.0.1"
     }
 }
