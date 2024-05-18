@@ -10,6 +10,15 @@ def login_user(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        captchaToken = request.POST['captchaToken']
+        
+        valid_captcha = validate_captcha_token(captchaToken)
+        if not valid_captcha:
+            return JsonResponse({
+                'message': "Captcha validation failed",
+                "registered": False,
+                "error": "captcha-failed"
+            }, status=400)
 
         user = authenticate(request, username=username, password=password)
         if user is None:
