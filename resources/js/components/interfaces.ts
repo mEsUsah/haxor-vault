@@ -13,7 +13,8 @@ export interface RegistrationSchema {
     email: string,
     password: string,
     passwordConfirm: string,
-    csrfmiddlewaretoken: string
+    csrfmiddlewaretoken: string,
+    captchaToken: string,
 }
 
 export interface AppSchema{
