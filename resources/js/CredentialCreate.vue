@@ -26,7 +26,6 @@ export default defineComponent({
         function saveCredential(credential: CredentialSchema){
             createCredential(credential)
                 .then((result: Credential) => {
-                    console.log(result);
                     window.location.href = "/credential/" + result.id;
                 })
                 .catch(error=>{

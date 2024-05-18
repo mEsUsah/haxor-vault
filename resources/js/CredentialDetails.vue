@@ -36,7 +36,6 @@ export default defineComponent({
         function saveCredential(credentialSchema: CredentialSchema){
             updateCredential(credentialId?credentialId:"", credentialSchema)
                 .then((result: Credential) => {
-                    console.log(result);
                     credential.value = result;
                 })
                 .catch(error=>{

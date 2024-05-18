@@ -29,7 +29,6 @@ export async function registerUser(data: RegistrationSchema): Promise<string> {
         })
         .then((response)=>{
             if(response.status == 200){
-                console.log("userRegister:", response.data);
                 resolve("ok");
             }
         })
