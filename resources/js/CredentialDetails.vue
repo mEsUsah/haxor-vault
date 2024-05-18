@@ -1,6 +1,9 @@
 <template>
     <div class="section__hedline">
-        <h1>{{ credential?.username }}@{{ credential?.app.name }}</h1>
+        <div class="section__hedline-text">
+            <h1>{{ credential?.app.name }}</h1>
+            <p>{{ credential?.username }}</p>
+        </div>
     </div>
     <hr>
     <CredentialForm
