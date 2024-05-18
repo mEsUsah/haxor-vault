@@ -67,7 +67,7 @@ export default defineComponent({
         async function register(event:Event): Promise<void>{
             event.preventDefault();
             const captchaToken = await reCaptcha();
-            
+
             const registrationSchema: RegistrationSchema = {
                 email: email.value,
                 password: password.value,
@@ -87,7 +87,7 @@ export default defineComponent({
                     statusMessage.value = {
                         type: "success",
                         messageClass: "message--success",
-                        text: "Registered! Check your Email to verify your account",
+                        text: "Registered! Check your Email to verify your account.",
                     };
                     enableRegistertration.value = false;
                 })
@@ -98,8 +98,15 @@ export default defineComponent({
                             messageClass: "message--error",
                             text: "User already exists!",
                         };
-                        animateElementShake("loginAlert");
                     }
+                    if(error == "invalid-email"){
+                        statusMessage.value = {
+                            type: "error",
+                            messageClass: "message--error",
+                            text: "Please enter a valid email address.",
+                        };
+                    }
+                    animateElementShake("loginAlert");
                 });
         }
 

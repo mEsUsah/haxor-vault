@@ -33,6 +33,9 @@ export async function registerUser(data: RegistrationSchema): Promise<string> {
             }
         })
         .catch(error => {
+            if(error.response.status == 400 && error.response.data.error == "invalid-email"){
+                reject("invalid-email");
+            }
             if(error.response.status == 400 && error.response.data.error == "password-mismatch"){
                 reject("password-mismatch");
             }
