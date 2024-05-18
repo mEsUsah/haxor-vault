@@ -1,12 +1,14 @@
 import { RegistrationSchema, StatusMessage, ValidationResult } from './interfaces.ts';
 
 export function validateRegistrationSchema(schema: RegistrationSchema): ValidationResult{
-    if(schema.email == ""){
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!schema.email.match(emailRegex) || schema.email.trim() == "") {
         return {
             message: <StatusMessage>{
                 type: "error",
                 messageClass: "message--error",
-                text: "Please enter a email",
+                text: "Please enter a valid email address",
             },
             success: <boolean>false
         };
