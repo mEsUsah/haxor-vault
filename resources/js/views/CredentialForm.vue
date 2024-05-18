@@ -19,7 +19,7 @@
                 :disabled="disableSubmit"
                 @click="saveCredential"
                 type="submit" class="button">Save</button>
-            <a href="/dashboard" class="button button--nautral">Cancel</a>
+            <a href="/dashboard" class="button button--nautral">Back</a>
             <button class="button button--danger"
                 v-if="!newCredential"
                 @click="destroyCredential"
