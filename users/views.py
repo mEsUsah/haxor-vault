@@ -27,14 +27,20 @@ def login_user(request):
         if user is None:
             return JsonResponse({
                 "message": "Wrong username or password",
-                "authenticated": False
+                "status": "username-password-mismatch",
             }, status=200)
-        else:
-            login(request, user)
+        
+        if user.is_active != 1:
             return JsonResponse({
-                "message": "successfully signed in",
-                "authenticated": True
+                "message": "User account not verified",
+                "status": "not-verified"
             }, status=200)
+        
+        login(request, user)
+        return JsonResponse({
+            "message": "Successfully signed in",
+            "status": "authenticated",
+        }, status=200)
     
     if request.user.is_authenticated:
         return redirect('dashboard')
