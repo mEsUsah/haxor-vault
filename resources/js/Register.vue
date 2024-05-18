@@ -32,12 +32,15 @@
 <script lang="ts">
 
 import { defineComponent, reactive, ref } from 'vue';
+
 import StatusMessageBox from './views/MessageBox.vue';
 import { staticPath } from './config';
 import { animateElementShake } from './components/animations';
 import {RegistrationSchema, StatusMessage} from './components/interfaces.ts';
 import { validateRegistrationSchema } from './components/validateRegistrationSchema.ts';
 import { registerUser } from './components/userRegister.ts';
+import { useReCaptcha } from 'vue-recaptcha-v3'
+
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
 export default defineComponent({
@@ -45,6 +48,13 @@ export default defineComponent({
         StatusMessageBox
     },
     setup(){
+        // ReCaptcha setup
+        const reCaptchaInstance = useReCaptcha();
+        async function reCaptcha() {
+            await reCaptchaInstance?.recaptchaLoaded();
+            return await reCaptchaInstance?.executeRecaptcha("login");
+        }
+
         const assets: object = reactive({
             haxorLogo: <string>staticPath + 'icons/haxor-logo-only-black.svg',
         });
@@ -54,14 +64,16 @@ export default defineComponent({
         const statusMessage = ref(<StatusMessage|null>null);
         const enableRegistertration = ref(<boolean>true);
 
-        function register(event:Event): void {
+        async function register(event:Event): Promise<void>{
             event.preventDefault();
+            const captchaToken = await reCaptcha();
             
             const registrationSchema: RegistrationSchema = {
                 email: email.value,
                 password: password.value,
                 passwordConfirm: passwordConfirm.value,
                 csrfmiddlewaretoken: csrfToken?csrfToken:"",
+                captchaToken: captchaToken?captchaToken:"",
             };
             const validationResult = validateRegistrationSchema(registrationSchema);
             if (!validationResult.success){
