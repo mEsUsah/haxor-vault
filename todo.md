@@ -1,14 +1,13 @@
 # Betatest result
- - [ ] username / password can be whitespace...
- - [ ] back button, not cancel on forms
- - [ ] username@app does not work as well as intended...
- - [ ] credential: username instead of name as hint
- - [ ] credential: after adding a cred, send back to dashboard
+ - [x] username / password can be whitespace...
+ - [x] back button, not cancel on forms
+ - [x] username@app does not work as well as intended...
+ - [x] credential: username instead of name as hint
+ - [x] credential: after adding a cred, send back to dashboard
  - [ ] hover hint on copy cred buttons
- - [ ] limit input lenght in frontend
+ - [x] limit input lenght in frontend
  - [x] email validation in frontend on registration.
  - [x] email validation in backend on registration.
- - [ ] do not allow whitespace in usernames
  - [ ] Disable admin in prod
  - [ ] Python docstrings
  - [ ] JSdoc
