@@ -52,7 +52,7 @@ export default defineComponent({
         const reCaptchaInstance = useReCaptcha();
         async function reCaptcha() {
             await reCaptchaInstance?.recaptchaLoaded();
-            return await reCaptchaInstance?.executeRecaptcha("login");
+            return await reCaptchaInstance?.executeRecaptcha("register");
         }
 
         const assets: object = reactive({
