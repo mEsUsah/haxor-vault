@@ -1,15 +1,9 @@
-import datetime
-from django.db import IntegrityError
 from django.core.exceptions import ValidationError
-from django.db.models import Max
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.parsers import JSONParser
-from api.serializers import AppTypeSerializer, \
-    AppSerializer, AppsSerializer, \
-    CredentialSerializer, CredentialsSerializer
+from vault.serializers import AppTypeSerializer, AppSerializer, CredentialSerializer
 from vault.models import AppType, App, Credential
 from api.forms import AppForm, CredentialForm
 
