@@ -10,6 +10,9 @@ const captchaSiteKey = document.querySelector('meta[name="captcha-site-key"]')?.
 const loginMountPoint = document.getElementById("vueUserLogin");
 if(loginMountPoint){
     const userLogin = createApp(Login);
+    userLogin.use(VueReCaptcha, { 
+        siteKey: captchaSiteKey??'',
+    });
     userLogin.mount(loginMountPoint);
 }
 

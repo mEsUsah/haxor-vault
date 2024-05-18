@@ -32,6 +32,7 @@ import { staticPath } from './config';
 import { animateElementShake } from './components/animations';
 import { authenticate } from './components/userAuthenticate.ts';
 import {StatusMessage, AuthenticationSchema} from './components/interfaces.ts';
+import { useReCaptcha } from 'vue-recaptcha-v3'
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
@@ -40,6 +41,13 @@ export default defineComponent({
         StatusMessageBox
     },
     setup(){
+        // ReCaptcha setup
+        const reCaptchaInstance = useReCaptcha();
+        async function reCaptcha() {
+            await reCaptchaInstance?.recaptchaLoaded();
+            return await reCaptchaInstance?.executeRecaptcha("login");
+        }
+        
         const assets: object = reactive({
             haxorLogo: <string>staticPath + 'icons/haxor-logo-only-black.svg',
         });
@@ -49,11 +57,13 @@ export default defineComponent({
 
         async function login(event:Event): Promise<void> {
             event.preventDefault();
+            const captchaToken = await reCaptcha();
             
             await authenticate(<AuthenticationSchema>{
                 username: username.value,
                 password: password.value,
                 csrfmiddlewaretoken: csrfToken?csrfToken:"",
+                captchaToken: captchaToken?captchaToken:"",
             }).then(() => {
                 statusMessage.value = {
                     type: "success",
