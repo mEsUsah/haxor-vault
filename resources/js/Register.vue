@@ -96,7 +96,7 @@ export default defineComponent({
                         statusMessage.value = {
                             type: "error",
                             messageClass: "message--error",
-                            text: "User already exists!",
+                            text: "User already exists. Please login.",
                         };
                     }
                     if(error == "invalid-email"){
@@ -104,6 +104,13 @@ export default defineComponent({
                             type: "error",
                             messageClass: "message--error",
                             text: "Please enter a valid email address.",
+                        };
+                    }
+                    if(error == "password-mismatch"){
+                        statusMessage.value = {
+                            type: "error",
+                            messageClass: "message--error",
+                            text: "Passwords do not match!",
                         };
                     }
                     animateElementShake("loginAlert");
