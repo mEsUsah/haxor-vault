@@ -1,13 +1,14 @@
-# Todo:
-- [x] Add basic user creation functionality
-- [x] Add registration form
-- [x] Verify user email in frontend
-- [x] Verify user email in backend
-- [x] Add backend to receive form
-- [x] Secure registration form with ReCaptcha 
-- [x] Secure login form with ReCaptcha 
-- [x] Generate verification token
-- [x] Configure email
-- [x] Send verificatino token to user email
-- [x] Setup URL and view to handle user account verification
-- [x] Deploy site
+# Betatest result
+ - [ ] username / password can be whitespace...
+ - [ ] back button, not cancel on forms
+ - [ ] username@app does not work as well as intended...
+ - [ ] credential: username instead of name as hint
+ - [ ] credential: after adding a cred, send back to dashboard
+ - [ ] hover hint on copy cred buttons
+ - [ ] limit input lenght in frontend
+ - [x] email validation in frontend on registration.
+ - [x] email validation in backend on registration.
+ - [ ] do not allow whitespace in usernames
+ - [ ] Disable admin in prod
+ - [ ] Python docstrings
+ - [ ] JSdoc
