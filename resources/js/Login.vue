@@ -82,6 +82,13 @@ export default defineComponent({
                     }
                     animateElementShake("loginAlert");
                 }
+                if(error == "not-verified"){
+                    statusMessage.value = {
+                        type: "error",
+                        messageClass: "message--error",
+                        text: "User account not verified",
+                    }
+                }
                 if(error == "system-error"){
                     statusMessage.value = {
                         type: "error",

@@ -29,10 +29,14 @@ export async function authenticate(data: AuthenticationSchema): Promise<string> 
         })
         .then((response)=>{
             if(response.status == 200){
-                if(response.data.authenticated){
+                if(response.data.status == "authenticated"){
                     localStorage.setItem("password", passwordClearText);
-                    resolve("success");
-                } else {
+                    resolve("authenticated");
+                }
+                if(response.data.status == "not-verified"){
+                    reject("not-verified");
+                }
+                else {
                     localStorage.removeItem("password");
                     reject("password-error");
                 }
