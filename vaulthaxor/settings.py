@@ -150,7 +150,7 @@ if not DEBUG:
             "file-info": {
                 "level": "INFO",
                 "class": "logging.FileHandler",
-                "filename": "/var/log/django/streak.haxor.no/info.log",
+                "filename": "/var/log/django/vault.haxor.no/info.log",
             },
         },
         "loggers": {
