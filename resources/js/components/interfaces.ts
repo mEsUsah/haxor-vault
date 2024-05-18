@@ -7,7 +7,8 @@ export interface StatusMessage {
 export interface AuthenticationSchema {
     username: string,
     password: string,
-    csrfmiddlewaretoken: string
+    csrfmiddlewaretoken: string,
+    captchaToken: string,
 }
 export interface RegistrationSchema {
     email: string,
