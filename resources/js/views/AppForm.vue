@@ -1,5 +1,5 @@
 <template>
-    <div class="form__wrapper">
+    <form class="form__wrapper">
         <div class="form__field">
             <select name="apptype" v-model="app.apptype">
                 <option value="" disabled>Select type:</option>
@@ -9,7 +9,7 @@
             </select>
         </div>
         <div class="form__field">
-            <input v-model="app.name" type="text" name="name" placeholder="Name">
+            <input v-model="app.name" type="text" name="name" placeholder="Name" maxlength="100">
         </div>
         <div class="form__buttons">
             <button 
@@ -17,17 +17,18 @@
                 @click="saveApp"
                 type="submit" class="button">Save</button>
             <a href="/dashboard" class="button button--nautral">Back</a>
-            <button class="button button--danger"
+            <a class="button button--danger"
                 v-if="!newApp"
                 @click="destroyApp"
-            >Delete</button>
+            >Delete</a>
         </div>
-    </div>
+    </form>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, onMounted, ref, reactive, computed, watch } from 'vue';
 import { AppType, App, AppSchema } from '../components/interfaces.ts';
+import { validateAppSchema } from '../components/validateAppSchema.ts';
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
 export default defineComponent({
@@ -65,11 +66,12 @@ export default defineComponent({
         })
         
         const disableSubmit = computed(()=>{
-            return app.name == "" || app.apptype == "";
+            return !validateAppSchema(app);
         })
 
-        function saveApp(){
-            if(!disableSubmit.value){
+        function saveApp(event: Event){
+            event.preventDefault();
+            if(validateAppSchema(app)){
                 ctx.emit("saveApp", app);
             }
         }
