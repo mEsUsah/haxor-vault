@@ -33,7 +33,7 @@ export async function authenticate(data: AuthenticationSchema): Promise<string> 
                     localStorage.setItem("password", passwordClearText);
                     resolve("authenticated");
                 }
-                if(response.data.status == "not-verified"){
+                else if(response.data.status == "not-verified"){
                     reject("not-verified");
                 }
                 else {
