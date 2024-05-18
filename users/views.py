@@ -79,7 +79,6 @@ def register_user(request):
             user.password_hash = password
             user.is_active = 0
             user.save()
-            print(user.verification_code)
 
             return JsonResponse({
                 "message": "successfully registered user",
