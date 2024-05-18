@@ -16,7 +16,8 @@ def export_vars(request):
         'USE_S3': os.getenv("S3_ACTIVATED").lower() in ('true', '1', 't'),
         's3_file_css': css_file,
         's3_file_js': js_file,
-        's3_file_js_login': js_file_login
+        's3_file_js_login': js_file_login,
+        'captcha_site_key': os.getenv("CAPTCHA_SITE_KEY"),
     }
     f.close()
     return data

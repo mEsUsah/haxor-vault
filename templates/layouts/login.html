@@ -15,6 +15,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <meta name="csrf-token" content="{{ csrf_token }}">
+    <meta name="captcha-site-key" content="{{ captcha_site_key }}">
 
     {% if USE_S3 %}
         <link rel="stylesheet" href="{% static '' %}{{s3_file_css}}" />
