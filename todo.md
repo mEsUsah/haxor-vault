@@ -6,7 +6,7 @@
 - [x] Add backend to receive form
 - [x] Secure registration form with ReCaptcha 
 - [x] Secure login form with ReCaptcha 
-- [ ] Generate verification token
+- [x] Generate verification token
 - [x] Configure email
-- [ ] Send verificatino token to user email
-- [ ] Setup URL and view to handle user account verification
+- [x] Send verificatino token to user email
+- [x] Setup URL and view to handle user account verification
