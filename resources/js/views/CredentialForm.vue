@@ -9,7 +9,7 @@
             </select>
         </div>
         <div class="form__field">
-            <input v-model="credential.username" type="text" name="name" placeholder="Name">
+            <input v-model="credential.username" type="text" name="username" placeholder="Username">
         </div>
         <div class="form__field">
             <input v-model="credential.password" type="password" name="password" placeholder="Password">
