@@ -74,9 +74,9 @@ export default defineComponent({
         });
         
         const disableSubmit = computed(()=>{
-            return credential.username == "" 
-                || credential.password == ""
-                || credential.app == "";
+            return credential.username.trim() == "" 
+                || credential.password.trim() == ""
+                || credential.app.trim() == "";
         });
 
         function saveCredential(){
