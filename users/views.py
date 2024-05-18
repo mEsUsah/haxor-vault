@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -56,6 +57,15 @@ def register_user(request):
         password = request.POST['password']
         passwordConfirm = request.POST['passwordConfirm']
         captchaToken = request.POST['captchaToken']
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            return JsonResponse({
+                'message': "Invalid email",
+                "registered": False,
+                "error": "invalid-email"
+            }, status=400)
 
         if User.objects.filter(email=email).exists():
             return JsonResponse({
