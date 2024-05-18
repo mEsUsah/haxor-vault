@@ -8,18 +8,20 @@
         <div v-for="app in filteredApps">
             <div class="app-item__wrapper">
                 <div class="app-item__headline">
-                    <div class="app-item__icon">
-                        <img v-if="app.apptype.name == 'Website'" class="app-item__icon-img--web" 
-                            :src="assets.webLogo" 
-                            alt="user">
-                        <img v-if="app.apptype.name == 'Game'" class="app-item__icon-img--game" 
-                            :src="assets.gameLogo" 
-                            alt="user">
-                        <img v-if="app.apptype.name == 'Mobile app'" class="app-item__icon-img--mobile" 
-                            :src="assets.mobileLogo" 
-                            alt="user">
+                    <div class="app-item__headline-text">
+                        <div class="app-item__icon">
+                            <img v-if="app.apptype.name == 'Website'" class="app-item__icon-img--web" 
+                                :src="assets.webLogo" 
+                                alt="user">
+                            <img v-if="app.apptype.name == 'Game'" class="app-item__icon-img--game" 
+                                :src="assets.gameLogo" 
+                                alt="user">
+                            <img v-if="app.apptype.name == 'Mobile app'" class="app-item__icon-img--mobile" 
+                                :src="assets.mobileLogo" 
+                                alt="user">
+                        </div>
+                        <span class="app-item__title">{{ app.name }}</span>
                     </div>
-                    <span class="app-item__title">{{ app.name }}</span>
                     <a :href="getAppUrl(app)" class="button button--danger">Edit</a>
                 </div>
                 <CredentialList
