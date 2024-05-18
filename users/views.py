@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from users.models import User
 from users.forms import UserForm
+from users.recaptcha import validate_captcha_token
 
 def login_user(request):
     if request.method == 'POST':
@@ -36,6 +37,7 @@ def register_user(request):
         email = request.POST['email']
         password = request.POST['password']
         passwordConfirm = request.POST['passwordConfirm']
+        captchaToken = request.POST['captchaToken']
 
         if User.objects.filter(email=email).exists():
             return JsonResponse({
@@ -50,6 +52,14 @@ def register_user(request):
                 "registered": False,
                 "error": "password-mismatch"
             }, status=400)
+        
+        valid_captcha = validate_captcha_token(captchaToken)
+        if not valid_captcha:
+            return JsonResponse({
+                'message': "Captcha validation failed",
+                "registered": False,
+                "error": "captcha-failed"
+            }, status=400)
             
         form = UserForm(request.POST)
         if form.is_valid():
@@ -57,7 +67,7 @@ def register_user(request):
             user.username = user.email
             user.password_hash = password
             user.is_active = 0
-            user.save()
+            # user.save()
 
             return JsonResponse({
                 "message": "successfully registered user",
