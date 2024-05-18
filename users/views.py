@@ -1,12 +1,13 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.http import JsonResponse
 from users.models import User
 from users.forms import UserForm
-from users.recaptcha import validate_captcha_token
 from users.serializers import UserSerializer
-from django.core.exceptions import ValidationError
+from users.recaptcha import validate_captcha_token
+from users.send_verification_mail import send_verification_email
 
 def login_user(request):
     if request.method == 'POST':
@@ -79,6 +80,7 @@ def register_user(request):
             user.password_hash = password
             user.is_active = 0
             user.save()
+            send_verification_email(user)
 
             return JsonResponse({
                 "message": "successfully registered user",
