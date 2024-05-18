@@ -1,10 +1,11 @@
 # Todo:
 - [x] Add basic user creation functionality
 - [x] Add registration form
-- [ ] Verify user email in frontend
-- [ ] Verify user email in backend
+- [x] Verify user email in frontend
+- [x] Verify user email in backend
 - [x] Add backend to receive form
-- [ ] Secure registration form with ReCaptcha 
+- [x] Secure registration form with ReCaptcha 
+- [x] Secure login form with ReCaptcha 
 - [ ] Generate verification token
 - [x] Configure email
 - [ ] Send verificatino token to user email
