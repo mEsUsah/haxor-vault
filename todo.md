@@ -10,3 +10,4 @@
 - [x] Configure email
 - [x] Send verificatino token to user email
 - [x] Setup URL and view to handle user account verification
+- [x] Deploy site
