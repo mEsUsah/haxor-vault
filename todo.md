@@ -9,5 +9,6 @@
  - [x] email validation in frontend on registration.
  - [x] email validation in backend on registration.
  - [ ] Disable admin in prod
+ - [ ] Handle input validation errors in backend
  - [ ] Python docstrings
  - [ ] JSdoc
