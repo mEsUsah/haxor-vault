@@ -11,10 +11,17 @@
                 src="{% static 'icons/haxor-logo-only-black.svg' %}" 
                 alt="logo">
             <h1>Vault</h1>
-            <div class="login-form__input">
-                <p>{{status_message}}</p>
-            </div>
-            <div>Already have an account? <a href="/login">Login</a></div>
+                {% if status_type == "success" %}
+                    <div class="login-form__text">
+                        <p>{{status_message}}</p>
+                    </div>
+                    <a href="/login" class="button">Login</a>
+                {% else %}
+                    <div class="login-form__text">
+                        <p>{{status_message}}</p>
+                    </div>
+                    <a href="/register" class="button">Register</a>
+                {% endif %}
         </div>
     </div>
     <div class="login-section__bg-credits">

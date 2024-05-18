@@ -3,6 +3,7 @@
         background-color: white;
         border-radius: 6px;
         width: fit-content;
+        min-width: 230px;
         padding: 16px;
         display: flex;
         flex-direction: column;
@@ -46,5 +47,8 @@
                 outline: $color-green auto 1px;
             }   
         }
+    }
+    &__text{
+        text-align: center;
     }
 }

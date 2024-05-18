@@ -104,17 +104,15 @@ def verify_user(request, id):
     try:
         user = User.objects.get(verification_code=id)
     except (ValidationError, User.DoesNotExist):
-        context['status_message'] = "invalid verification code"
+        context['status_message'] = "❌Invalid verification code"
         context['status_type'] = "error"
         return render(request, 'users/verify.html', context, status=404)
     
-    if user.is_active == 1:
-        context['status_message'] = "User account already verified"
-        context['status_type'] = "error"
-    else:
+    if user.is_active != 1:
         user.is_active = 1
         user.save()
-        context['status_message'] = "User verified"
-        context['status_type'] = "success"
+
+    context['status_message'] = "🔥 User acccount verified"
+    context['status_type'] = "success"
     
     return render(request, 'users/verify.html', context)
