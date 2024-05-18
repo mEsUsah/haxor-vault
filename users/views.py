@@ -5,6 +5,8 @@ from django.http import JsonResponse
 from users.models import User
 from users.forms import UserForm
 from users.recaptcha import validate_captcha_token
+from users.serializers import UserSerializer
+from django.core.exceptions import ValidationError
 
 def login_user(request):
     if request.method == 'POST':
@@ -76,7 +78,8 @@ def register_user(request):
             user.username = user.email
             user.password_hash = password
             user.is_active = 0
-            # user.save()
+            user.save()
+            print(user.verification_code)
 
             return JsonResponse({
                 "message": "successfully registered user",
@@ -93,3 +96,26 @@ def register_user(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+def verify_user(request, id):
+    context = {
+        'status_message': None,
+        'status_type': None
+    }
+    try:
+        user = User.objects.get(verification_code=id)
+    except (ValidationError, User.DoesNotExist):
+        context['status_message'] = "invalid verification code"
+        context['status_type'] = "error"
+        return render(request, 'users/verify.html', context, status=404)
+    
+    if user.is_active == 1:
+        context['status_message'] = "User account already verified"
+        context['status_type'] = "error"
+    else:
+        user.is_active = 1
+        user.save()
+        context['status_message'] = "User verified"
+        context['status_type'] = "success"
+    
+    return render(request, 'users/verify.html', context)
