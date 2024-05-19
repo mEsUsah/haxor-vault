@@ -40,6 +40,7 @@ def details(request, id):
     """
     View or update app.
     """
+
     try:
         app = App.objects.get(pk=id)
     except App.DoesNotExist:
@@ -81,6 +82,7 @@ def delete(request, id):
     """
     Delete app.
     """
+    
     try:
         app = App.objects.get(pk=id)
     except App.DoesNotExist:
