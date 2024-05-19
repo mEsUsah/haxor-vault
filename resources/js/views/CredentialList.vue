@@ -2,12 +2,14 @@
     <div v-if="credentials?.length" class="app-item__content">
         <div class="app-item__credential-wrapper" v-for="credential in credentials" :key="credential.id">
             <button class="button button--icon"
+                title="Click to copy username to clipboard"
                 @click="copyToClipboard(credential.username, 'button-username-' + credential.id)">
                 <img class="button__logo" :src="assets.userLogo" alt="user"
                     :id="'button-username-' + credential.id">
             </button>
 
             <button class="button button--icon"
+            title="Click to copy password to clipboard"    
                 @click="copyToClipboard(credential.password, 'button-password-' + credential.id)">
                 <img class="button__logo" :src="assets.passwordLogo" alt="password" 
                     :id="'button-password-' + credential.id">
