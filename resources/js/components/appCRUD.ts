@@ -6,7 +6,8 @@ import { getMasterPassword } from './utils.ts';
 import { toRaw } from 'vue';
 
 /**
- * Get all user apps from API
+ * Get all apps from the API.
+ * 
  * @returns {Promise<App[]>} - Promise with decrypted apps
  */
 export async function getApps(): Promise<App[]>{
@@ -36,7 +37,8 @@ export async function getApps(): Promise<App[]>{
 }
 
 /**
- * Get user app from API
+ * Get app details from API.
+ * 
  * @param {string} id - App id
  * @returns {Promise<App>} - Promise with decrypted apps
  */
@@ -60,8 +62,9 @@ export async function getApp(id: string): Promise<App>{
 }
 
 /**
- * Create an user app
- * @param {AppSchema} data
+ * Create a app
+ * 
+ * @param {AppSchema} data - App data
  * @returns {Promise<App>} Created app object
  */
 export async function createApp(data: AppSchema): Promise<App>{
@@ -88,10 +91,11 @@ export async function createApp(data: AppSchema): Promise<App>{
 }
 
 /**
- * Update an user app
- * @param {string} id - App ID
- * @param {AppSchema} data - App data
- * @returns {Promise<App>} Updated app object
+ * Update a app.
+ * 
+ * @param {string} id - App ID.
+ * @param {AppSchema} data - App data.
+ * @returns {Promise<App>} Updated app object.
  */
 export async function updateApp(id: string, data: AppSchema): Promise<App>{
     return new Promise((resolve, reject) => {
@@ -119,10 +123,11 @@ export async function updateApp(id: string, data: AppSchema): Promise<App>{
 }
 
 /**
- * Delete a user app
- * @param {string} id - App ID
- * @param {AppSchema} data - App data
- * @returns {Promise<string>} Status string
+ * Delete a app.
+ * 
+ * @param {string} id App ID.
+ * @param {AppSchema} data App data.
+ * @returns {Promise<string>} Status string.
  */
 export async function deleteApp(id: string, data: AppSchema): Promise<String>{
     return new Promise((resolve, reject) => {

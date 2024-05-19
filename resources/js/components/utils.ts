@@ -2,7 +2,8 @@
  * Get master password from local storage in browser.
  * 
  * Redirects to logout page if not found.
- * @returns password
+ * 
+ * @returns password.
  */
 export function getMasterPassword(): string{
     let password = localStorage.getItem("password");
@@ -15,8 +16,9 @@ export function getMasterPassword(): string{
 }
 
 /**
- * Add text to OS clipboard
- * @param text - what to add to clipboard
+ * Add text to OS clipboard.
+ * 
+ * @param text - text to be added to clipboard.
  */
 export function copyToClipboard(text, elementId): void{
     navigator.clipboard.writeText(text)

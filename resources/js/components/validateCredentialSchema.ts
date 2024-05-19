@@ -1,5 +1,11 @@
 import { CredentialSchema } from './interfaces.ts';
 
+/**
+ * Validates the credential schema.
+ * 
+ * @param {CredentialSchema} credential Credential schema.
+ * @returns {Boolean}
+ */
 export function validateCredentialSchema(credential: CredentialSchema): Boolean {
     if (credential.username.trim() === "" || credential.username.length > 100) {
         return false;

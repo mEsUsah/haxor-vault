@@ -2,6 +2,12 @@ import axios from 'axios';
 import { api_host, api_apptypes } from '../config.ts';
 import { AppType } from './interfaces.ts';
 
+
+/**
+ * Get app types from API.
+ * 
+ * @returns {Promise<AppType[]>} Promise with app types.
+ */
 export async function getAppTypes(): Promise<AppType[]>{
     return new Promise((resolve, reject) => {
         axios.get(api_host + api_apptypes)

@@ -1,5 +1,6 @@
 /**
  * A set of simple and easy-to-use cryptography functions.
+ * 
  * @author Stanley Skarshaug
  * @requires argon2-browser":^1.18.0
  * @requires crypto-js":^4.2.0
@@ -11,7 +12,8 @@ const salt = 'hackingIsSimplyCuriosity';
 
 /**
  * Generate Argon2 hash of supplied password.
- * @param {string} password - plaintext password that is to be hashed.
+ * 
+ * @param {string} password Plaintext password that is to be hashed.
  * @returns {Promise<string>} Promise with hash string.
  */
 export function hashArgon2(password: string): Promise<string> {
@@ -29,9 +31,10 @@ export function hashArgon2(password: string): Promise<string> {
 
 /**
  * Encrypt plaintext using AES.
- * @param {string} plaintext - plaintex to be encrypted
- * @param {string} key - encryption key, used for the encryption
- * @returns {string} ciphertext
+ * 
+ * @param {string} plaintext Plaintex to be encrypted.
+ * @param {string} key Encryption key.
+ * @returns {string} Ciphertext.
  */
 export function encryptAES(plaintext: string, key: string): string{
     return CryptoJS.AES.encrypt(plaintext, key).toString();
@@ -39,9 +42,10 @@ export function encryptAES(plaintext: string, key: string): string{
 
 /**
  * Decryptes ciphertext using AES.
- * @param {string} ciphertext - ciphertext to be decrypted
- * @param {string} key - encryption key, used for the encryption
- * @returns {string} plaintext
+ * 
+ * @param {string} ciphertext Ciphertext to be decrypted.
+ * @param {string} key Decrtyption key.
+ * @returns {string} Plaintext.
  */
 export function decryptAES(ciphertext: string, key: string): string{
     var bytes  = CryptoJS.AES.decrypt(ciphertext, key);

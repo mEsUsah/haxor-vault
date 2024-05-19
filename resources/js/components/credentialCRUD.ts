@@ -6,9 +6,10 @@ import { getMasterPassword } from './utils.ts';
 import { encryptCredentialSchema, decryptCredential } from './credentialCrypto.ts'
 
 /**
- * Get user app from API
- * @param {string} id - App id
- * @returns {Promise<Credential>} - Promise with decrypted credential
+ * Get credential from API.
+ * 
+ * @param {string} id Credential id.
+ * @returns {Promise<Credential>} Promise with decrypted credential.
  */
 export async function getCredential(id: string): Promise<Credential>{
     return new Promise((resolve, reject) => {
@@ -26,9 +27,10 @@ export async function getCredential(id: string): Promise<Credential>{
 }
 
 /**
- * Create an user credential
- * @param {CredentialSchema} data
- * @returns {Promise<Credential>} Created credential object
+ * Create a credential.
+ * 
+ * @param {CredentialSchema} data Credential data.
+ * @returns {Promise<Credential>} Created credential object.
  */
 export async function createCredential(data: CredentialSchema): Promise<Credential>{
     return new Promise((resolve, reject) => {
@@ -54,10 +56,11 @@ export async function createCredential(data: CredentialSchema): Promise<Credenti
 }
 
 /**
- * Update a user credential
- * @param {string} id - Credential ID
- * @param {CredentialSchema} data
- * @returns {Promise<Credential>} Created credential object
+ * Update a credential.
+ * 
+ * @param {string} id Credential id.
+ * @param {CredentialSchema} data Credential data.
+ * @returns {Promise<Credential>} Created credential object.
  */
 export async function updateCredential(id: string, data: CredentialSchema): Promise<Credential>{
     return new Promise((resolve, reject) => {
@@ -85,10 +88,11 @@ export async function updateCredential(id: string, data: CredentialSchema): Prom
 }
 
 /**
- * Delete a user credential
+ * Delete a credential
+ * 
  * @param {string} id - Credential ID
- * @param {CredentialSchema} data
- * @returns {Promise<string>} Created credential object
+ * @param {CredentialSchema} data Credential data
+ * @returns {Promise<string>} Status string
  */
 export async function deleteCredential(id: string, data: CredentialSchema): Promise<String>{
     return new Promise((resolve, reject) => {
