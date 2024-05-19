@@ -1,8 +1,7 @@
 from django.core.exceptions import ValidationError
-from django.http import JsonResponse
+from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 from vault.serializers import CredentialSerializer
 from vault.models import Credential
 from vault.forms import CredentialForm
@@ -11,8 +10,10 @@ from vault.forms import CredentialForm
 @permission_classes([IsAuthenticated])
 def list(request):
     """
-    List all user credentials, or create a new credential.
+    List all credentials, or create a new credential.
+    Will not allow user to create a credential for an app that is not theirs.
     """
+
     if request.method == "GET":
         credentials = Credential.objects.filter(app__user=request.user)
         serializer = CredentialSerializer(credentials, many=True)
@@ -23,15 +24,15 @@ def list(request):
         if form.is_valid():
             credential = form.save(commit=False)
             if credential.app.user != request.user:
-                return JsonResponse({
+                return Response({
                     'message': "Not your app",
                 }, status=403)
             credential.save()
 
             serializer = CredentialSerializer(credential)
-            return JsonResponse(serializer.data, status=201)
+            return Response(serializer.data, status=201)
         else:
-            return JsonResponse({
+            return Response({
                 'message': "validation error",
                 'errors': serializer.errors, 
             }, status=400)
@@ -40,21 +41,23 @@ def list(request):
 @permission_classes([IsAuthenticated])
 def details(request, id):
     """
-    Retrieve, update or delete a user credential.
+    View or update a credential.
+    Will not allow user to view or update a credential for an app that is not theirs.
     """
+
     try:
         credential = Credential.objects.get(pk=id)
     except Credential.DoesNotExist:
-        return JsonResponse({
+        return Response({
             'message': "Not found",
         }, status=404)
     except ValidationError:
-        return JsonResponse({
+        return Response({
             'message': "invalid UUID",
         }, status=400)
     
     if credential.app.user != request.user:
-        return JsonResponse({
+        return Response({
             'message': "Not yours",
         }, status=403)
 
@@ -67,15 +70,15 @@ def details(request, id):
         if form.is_valid():
             credential = form.save(commit=False)
             if credential.app.user != request.user:
-                return JsonResponse({
+                return Response({
                     'message': "Not your app",
                 }, status=403)
             credential.save()
 
             serializer = CredentialSerializer(credential)
-            return JsonResponse(serializer.data, status=200)
+            return Response(serializer.data, status=200)
         else:
-            return JsonResponse({
+            return Response({
                 'message': "Validation error",
                 'errors': form.errors, 
             }, status=400)
@@ -85,26 +88,28 @@ def details(request, id):
 def delete(request, id):
     """
     Retrieve, update or delete a user credential.
+    Will not allow user to delete a credential for an app that is not theirs.
     """
+
     try:
         credential = Credential.objects.get(pk=id)
     except Credential.DoesNotExist:
-        return JsonResponse({
+        return Response({
             'message': "Not found",
         }, status=404)
     except ValidationError:
-        return JsonResponse({
+        return Response({
             'message': "invalid UUID",
         }, status=400)
     
     if credential.app.user != request.user:
-        return JsonResponse({
+        return Response({
             'message': "Not yours",
         }, status=403)
 
     
     if request.method == "POST":
         credential.delete()
-        return JsonResponse({
-            'message': "Successfully Deleted",
+        return Response({
+            'message': "Successfully deleted credential",
         }, status=200)
