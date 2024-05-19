@@ -2,15 +2,18 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from django.contrib import messages
 from django.http import JsonResponse
 from users.models import User
 from users.forms import UserForm
-from users.serializers import UserSerializer
 from users.recaptcha import validate_captcha_token
 from users.send_verification_mail import send_verification_email
 
 def login(request):
+    """ Handles the login process. 
+
+    Redirect to dashboard if user is already authenticated,
+    """
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -49,6 +52,9 @@ def login(request):
     return render(request, 'users/login.html')
 
 def register(request):
+    """ Handles the registration process.
+    """
+    
     if request.user.is_authenticated:
         return redirect('dashboard')
     
@@ -111,10 +117,15 @@ def register(request):
     return render(request, 'users/register.html')
 
 def logout(request):
+    """ Logs out the user.
+    """
+    
     logout(request)
     return redirect('login')
 
-def verify(request, id):
+def verify(request, id: str):
+    """ Handles the user verification process."""
+    
     context = {
         'status_message': None,
         'status_type': None
