@@ -4,42 +4,37 @@
             v-if="statusMessage"
             :statusMessage>
         </StatusMessageBox>
+
         <form @submit="register" class="login-form__wrapper">
-            <img class="login-section__logo" 
-                :src="assets.haxorLogo" 
-                alt="logo">
+            <img class="login-section__logo" :src="assets.haxorLogo" alt="logo">
             <h1>Vault</h1>
+            
             <div class="login-form__input">
-                <input type="text" 
-                    v-model="email"
-                    placeholder="Email">
+                <input type="text" v-model="email" placeholder="Email">
             </div>
             <div class="login-form__input">
-                <input type="password"
-                    v-model="password"
-                    placeholder="Password">
+                <input type="password" v-model="password" placeholder="Password">
             </div>
             <div class="login-form__input">
-                <input type="password"
-                    v-model="passwordConfirm"
-                    placeholder="Confirm password">
+                <input type="password" v-model="passwordConfirm" placeholder="Confirm password">
             </div>
             <button type="submit" :disabled="!enableRegistertration">Register</button> 
+
             <div>Already have an account? <a href="/login">Login</a></div>
         </form>
+
     </div>
 </template>
 <script lang="ts">
 
 import { defineComponent, reactive, ref } from 'vue';
-
-import StatusMessageBox from './views/MessageBox.vue';
-import { staticPath } from './config';
-import { animateElementShake } from './components/animations';
-import {RegistrationSchema, StatusMessage} from './components/interfaces.ts';
-import { validateRegistrationSchema } from './components/validateRegistrationSchema.ts';
-import { registerUser } from './components/userRegister.ts';
 import { useReCaptcha } from 'vue-recaptcha-v3'
+import { RegistrationSchema, StatusMessage, ValidationResult } from './components/interfaces.ts';
+import { validateRegistrationSchema } from './components/validateRegistrationSchema.ts';
+import { animateElementShake } from './components/animations';
+import { registerUser } from './components/userRegister.ts';
+import { staticPath } from './config';
+import StatusMessageBox from './views/MessageBox.vue';
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
@@ -48,6 +43,18 @@ export default defineComponent({
         StatusMessageBox
     },
     setup(){
+        // View setup
+        const email = ref(<string>"");
+        const password = ref(<string>"");
+        const passwordConfirm = ref(<string>"");
+        const statusMessage = ref(<StatusMessage|null>null);
+        const enableRegistertration = ref(<boolean>true);
+        
+        // Asset setup
+        const assets: object = reactive({
+            haxorLogo: <string>staticPath + 'icons/haxor-logo-only-black.svg',
+        });
+
         // ReCaptcha setup
         const reCaptchaInstance = useReCaptcha();
         async function reCaptcha() {
@@ -55,15 +62,15 @@ export default defineComponent({
             return await reCaptchaInstance?.executeRecaptcha("register");
         }
 
-        const assets: object = reactive({
-            haxorLogo: <string>staticPath + 'icons/haxor-logo-only-black.svg',
-        });
-        const email = ref(<string>"");
-        const password = ref(<string>"");
-        const passwordConfirm = ref(<string>"");
-        const statusMessage = ref(<StatusMessage|null>null);
-        const enableRegistertration = ref(<boolean>true);
-
+        /**
+         * Register user account.
+         * 
+         * Validates the registration form, checks CAPTCHA, and sends the registration request.
+         * Displays status message if registration succeeds or fails.
+         * 
+         * @param {Event} event 
+         * @returns {Promise<void>}
+         */
         async function register(event:Event): Promise<void>{
             event.preventDefault();
             const captchaToken = await reCaptcha();
@@ -75,7 +82,7 @@ export default defineComponent({
                 csrfmiddlewaretoken: csrfToken?csrfToken:"",
                 captchaToken: captchaToken?captchaToken:"",
             };
-            const validationResult = validateRegistrationSchema(registrationSchema);
+            const validationResult: ValidationResult = validateRegistrationSchema(registrationSchema);
             if (!validationResult.success){
                 statusMessage.value = validationResult.message;
                 animateElementShake("loginAlert");

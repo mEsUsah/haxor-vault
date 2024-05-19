@@ -15,6 +15,14 @@ export default defineComponent({
         }
     },
     setup() {
+        /**
+         * Get create credential URL.
+         * 
+         * Includes current app-id as a query parameter.
+         * 
+         * Used when navigating to create credential page.
+         * @param app 
+         */
         function getCreateCredentialUrl(app: App){
             return "/credential/create?app=" + app?.id;
         }

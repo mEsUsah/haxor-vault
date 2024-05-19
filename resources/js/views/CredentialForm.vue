@@ -55,6 +55,7 @@ export default defineComponent({
         'destroyCredential'
     ],
     setup(props, ctx) {
+        // View setup
         const credential: CredentialSchema = reactive({
             username: "",
             password: "",
@@ -78,17 +79,33 @@ export default defineComponent({
             return !validateCredentialSchema(credential);
         });
 
-        function saveCredential(event: Event){
+        /**
+         * Save credential.
+         * 
+         * @param {Event} event 
+         * @returns {void}
+         */
+        function saveCredential(event: Event): void{
             event.preventDefault();
             if(validateCredentialSchema(credential)){
                 ctx.emit("saveCredential", credential);
             }
         }
 
-        function destroyCredential(){
+        /**
+         * Delete credential.
+         * 
+         * @returns {void}
+         */
+        function destroyCredential(): void{
             ctx.emit("destroyCredential", credential)
         }
 
+        /**
+         * Get app-id from current page url.
+         * 
+         * @returns {string}
+         */
         function getAppFromUrl(): string {
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);

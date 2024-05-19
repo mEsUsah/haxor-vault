@@ -24,9 +24,11 @@
                     </div>
                     <a :href="getAppUrl(app)" class="button button--danger">Edit</a>
                 </div>
+
                 <CredentialList
                     :credentials="app.credentials"
                 ></CredentialList>
+                
                 <AppItemFooter
                     :app="app"
                 ></AppItemFooter>
@@ -48,22 +50,39 @@ export default defineComponent({
         AppItemFooter
     },
     setup() {
+        // View setup
         const apps = ref<App[]>([]);
+        const search = ref<string>('');
+        
+        // Asset setup
         const assets: object = reactive({
             webLogo: <string>staticPath + 'icons/globe--black.svg',
             gameLogo: <string>staticPath + 'icons/game--black.png',
             mobileLogo: <string>staticPath + 'icons/mobile--black.png',
         });
-        const search = ref<string>('');
 
-        function getAppUrl(app: App){
+        /**
+         * Get app URL.
+         * 
+         * Used for navigating to app details.
+         * @param app 
+         */
+        function getAppUrl(app: App): string{
             return `/app/${app.id}`;
         }
 
+        /**
+         * Filter displayed apps based on search input.
+         */
         const filteredApps = computed(() => {
             return apps.value.filter(app => app.name.toLowerCase().includes(search.value.toLowerCase()));
         });
 
+        /**
+         * Get data needed by view.
+         * 
+         * @returns {Promise<void>}
+         */
         async function getData(): Promise<void>{
             apps.value = await getApps();
         }

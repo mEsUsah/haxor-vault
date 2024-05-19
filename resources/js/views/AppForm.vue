@@ -8,9 +8,11 @@
                 </option>
             </select>
         </div>
+
         <div class="form__field">
             <input v-model="app.name" type="text" name="name" placeholder="Name" maxlength="100">
         </div>
+
         <div class="form__buttons">
             <button 
                 :disabled="disableSubmit"
@@ -29,6 +31,7 @@
 import { defineComponent, PropType, onMounted, ref, reactive, computed, watch } from 'vue';
 import { AppType, App, AppSchema } from '../components/interfaces.ts';
 import { validateAppSchema } from '../components/validateAppSchema.ts';
+
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
 export default defineComponent({
@@ -52,6 +55,7 @@ export default defineComponent({
         'destroyApp'
     ],
     setup(props, ctx) {
+        // View setup
         const app: AppSchema = reactive({
             name: "",
             apptype: "",
@@ -69,14 +73,25 @@ export default defineComponent({
             return !validateAppSchema(app);
         })
 
-        function saveApp(event: Event){
+        /**
+         * Save changes to app.
+         * 
+         * @param {AppSchema} appSchema 
+         * @returns {void}
+         */
+        function saveApp(event: Event): void{
             event.preventDefault();
             if(validateAppSchema(app)){
                 ctx.emit("saveApp", app);
             }
         }
 
-        function destroyApp(){
+        /**
+         * Delete app.
+         * 
+         * @returns {void}
+         */
+        function destroyApp(): void{
             ctx.emit("destroyApp", app)
         }
 

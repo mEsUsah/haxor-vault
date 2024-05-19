@@ -7,7 +7,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, ref, reactive, computed } from 'vue';
-import { CredentialSchema, Credential, AppType } from './components/interfaces.ts';
+import { CredentialSchema, Credential, App } from './components/interfaces.ts';
 import { getApps } from './components/appCRUD.ts';
 import { createCredential } from './components/credentialCRUD.ts';
 import CredentialForm from './views/CredentialForm.vue';
@@ -17,12 +17,17 @@ export default defineComponent({
         CredentialForm,
     },
     setup() {      
-        const apps = ref<AppType[]>();
+        // View setup
+        const apps = ref<App[]>();
         
-        async function getData(): Promise<void>{
-            apps.value = await getApps();
-        }
-
+        /**
+         * Save credential.
+         * 
+         * Redirects to dashboard if successfull.
+         * 
+         * @param {CredentialSchema} credential 
+         * @returns {void}
+         */
         function saveCredential(credential: CredentialSchema){
             createCredential(credential)
                 .then((result: Credential) => {
@@ -31,6 +36,15 @@ export default defineComponent({
                 .catch(error=>{
                     console.log(error);
                 });
+        }
+
+        /**
+         * Get data needed by view.
+         * 
+         * @returns {Promise<void>}
+         */
+        async function getData(): Promise<void>{
+            apps.value = await getApps();
         }
 
         onMounted(() => {

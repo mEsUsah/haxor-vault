@@ -1,28 +1,22 @@
 <template>
     <div v-if="credentials?.length" class="app-item__content">
-        <div class="app-item__credential-wrapper"
-            v-for="credential in credentials" 
-            :key="credential.id">
+        <div class="app-item__credential-wrapper" v-for="credential in credentials" :key="credential.id">
             <button class="button button--icon"
                 @click="copyToClipboard(credential.username, 'button-username-' + credential.id)">
-                <img class="button__logo" 
-                    :src="assets.userLogo" 
-                    alt="user"
+                <img class="button__logo" :src="assets.userLogo" alt="user"
                     :id="'button-username-' + credential.id">
             </button>
+
             <button class="button button--icon"
-            @click="copyToClipboard(credential.password, 'button-password-' + credential.id)">
-                <img class="button__logo" 
-                    :src="assets.passwordLogo" 
-                    alt="password"
+                @click="copyToClipboard(credential.password, 'button-password-' + credential.id)">
+                <img class="button__logo" :src="assets.passwordLogo" alt="password" 
                     :id="'button-password-' + credential.id">
             </button>
+            
             <span class="app-item__credential-name">{{ credential?.username }}</span>
-            <a class="button button--danger button--icon"
-                :href="getCredentialUrl(credential)">
-                <img class="button__logo" 
-                    :src="assets.settingsLogo" 
-                    alt="edit">
+            
+            <a class="button button--danger button--icon" :href="getCredentialUrl(credential)">
+                <img class="button__logo" :src="assets.settingsLogo" alt="edit">
             </a>
         </div>
     </div>
@@ -42,12 +36,19 @@ export default defineComponent({
         }
     },
     setup() {
+        // Asset setup
         const assets: object = reactive({
             settingsLogo: <string>staticPath + 'icons/settings--white.png',
             userLogo: <string>staticPath + 'icons/user--white.png',
             passwordLogo: <string>staticPath + 'icons/key--white-v3.png',
         });
 
+        /**
+         * Get credential URL.
+         * 
+         * Used when navigating to credential details.
+         * @param credential 
+         */
         function getCredentialUrl(credential: Credential){
             return "/credential/" + credential.id;
         }

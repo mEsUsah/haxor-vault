@@ -17,12 +17,17 @@ export default defineComponent({
         AppForm
     },
     setup() {      
+        // View setup
         const appTypes = ref<AppType[]>();
         
-        async function getData(): Promise<void>{
-            appTypes.value = await getAppTypes();
-        }
-
+        /**
+         * Save app.
+         * 
+         * Redirects to app details page if successfull.
+         * 
+         * @param {AppSchema} app 
+         * @returns {void}
+         */
         function saveApp(app: AppSchema){
             createApp(app)
                 .then((result: App) => {
@@ -31,6 +36,15 @@ export default defineComponent({
                 .catch(error=>{
                     console.log(error);
                 });
+        }
+
+        /**
+         * Get data needed by view.
+         * 
+         * @returns {Promise<void>}
+         */
+        async function getData(): Promise<void>{
+            appTypes.value = await getAppTypes();
         }
 
         onMounted(() => {

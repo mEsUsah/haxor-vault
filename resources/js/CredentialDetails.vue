@@ -15,8 +15,8 @@
     ></CredentialForm>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref, reactive, computed } from 'vue';
-import { CredentialSchema, Credential, AppType } from './components/interfaces.ts';
+import { defineComponent, onMounted, ref } from 'vue';
+import { CredentialSchema, Credential, App } from './components/interfaces.ts';
 import { getApps } from './components/appCRUD.ts';
 import { getCredential, updateCredential, deleteCredential } from './components/credentialCRUD.ts';
 import CredentialForm from './views/CredentialForm.vue';
@@ -28,15 +28,17 @@ export default defineComponent({
         CredentialForm,
     },
     setup() {      
-        const credential = ref<Credential>()
-        const apps = ref<AppType[]>();
+        // View setup
+        const credential = ref<Credential>();
+        const apps = ref<App[]>();
         
-        async function getData(): Promise<void>{
-            credential.value = await getCredential(credentialId?credentialId:"");
-            apps.value = await getApps();
-        }
-
-        function saveCredential(credentialSchema: CredentialSchema){
+        /**
+         * Save changes to credential.
+         * 
+         * @param {CredentialSchema} credentialSchema 
+         * @returns {void}
+         */
+        function saveCredential(credentialSchema: CredentialSchema): void{
             updateCredential(credentialId?credentialId:"", credentialSchema)
                 .then((result: Credential) => {
                     credential.value = result;
@@ -46,7 +48,13 @@ export default defineComponent({
                 });
         }
 
-        function destroyCredential(credentialSchema: CredentialSchema){
+        /**
+         * Delete credential.
+         * 
+         * @param {CredentialSchema} credentialSchema 
+         * @returns {void}
+         */
+        function destroyCredential(credentialSchema: CredentialSchema): void{
             deleteCredential(credentialId?credentialId:"", credentialSchema)
                 .then((result: String) => {
                     window.location.href = "/dashboard";
@@ -54,6 +62,16 @@ export default defineComponent({
                 .catch(error=>{
                     console.log(error);
                 });
+        }
+
+        /**
+         * Get data needed by view.
+         * 
+         * @returns {Promise<void>}
+         */
+         async function getData(): Promise<void>{
+            credential.value = await getCredential(credentialId?credentialId:"");
+            apps.value = await getApps();
         }
 
         onMounted(() => {

@@ -10,12 +10,7 @@
 <script lang=ts>
 import { PropType, defineComponent, reactive } from 'vue';
 import { staticPath } from '../config';
-
-interface StatusMessage {
-    type: string,
-    messageClass: string,
-    text: string,
-}
+import { StatusMessage } from '../components/interfaces';
 
 export default defineComponent({
     props: {
@@ -25,9 +20,11 @@ export default defineComponent({
         }
     },
     setup(){
+        // Asset setup
         const assets: object = reactive({
             warningIcon: <string>staticPath + 'icons/warning.png'
         });
+        
         return {
             assets
         }
