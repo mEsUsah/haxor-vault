@@ -3,6 +3,13 @@ from users.models import User
 
 
 class AuthBackend(BaseBackend):
+    """Custom authentication backend.
+    
+    Allows for authentication using the password_hash field.
+    
+    This allows for client side hashing of passwords.
+    """
+    
     def authenticate(self, request, username=None, password=None):
         try:
             user = User.objects.get(username=username)
