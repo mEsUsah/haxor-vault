@@ -11,7 +11,7 @@ from vault.forms import AppForm
 @permission_classes([IsAuthenticated])
 def list(request):
     """
-    List all user apps, or create a new app.
+    View all apps, or create a new app.
     """
 
     if request.method == "GET":
@@ -38,7 +38,7 @@ def list(request):
 @permission_classes([IsAuthenticated])
 def details(request, id):
     """
-    Retrieve or update a user app.
+    View or update app.
     """
     try:
         app = App.objects.get(pk=id)
@@ -74,18 +74,12 @@ def details(request, id):
                 'message': "Validation error",
                 'errors': serializer.errors, 
             }, status=400)
-        
-    if request.method == "DELETE":
-        app.delete()
-        return JsonResponse({
-            'message': "Successfully Deleted",
-        }, status=200)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def delete(request, id):
     """
-    Delete a user app.
+    Delete app.
     """
     try:
         app = App.objects.get(pk=id)
@@ -106,5 +100,5 @@ def delete(request, id):
     if request.method == "POST":
         app.delete()
         return JsonResponse({
-            'message': "Successfully Deleted",
+            'message': "Successfully deleted app",
         }, status=200)
