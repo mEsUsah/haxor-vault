@@ -8,7 +8,7 @@ from users.forms import UserForm
 from users.recaptcha import validate_captcha_token
 from users.send_verification_mail import send_verification_email
 
-def login(request):
+def session_start(request):
     """ Handles the login process. 
 
     Redirect to dashboard if user is already authenticated,
@@ -116,7 +116,7 @@ def register(request):
 
     return render(request, 'users/register.html')
 
-def logout(request):
+def session_end(request):
     """ Logs out the user.
     """
     
