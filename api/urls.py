@@ -1,14 +1,14 @@
 from django.urls import path
-from . import views
+from api.views import apptypes, apps, credentials
 
 urlpatterns = [
-    path('v1/apptypes', views.apptype_list),
+    path('v1/apptypes', apptypes.list),
     
-    path('v1/apps', views.app_list),
-    path('v1/apps/<str:id>', views.app_details),
-    path('v1/apps/<str:id>/delete', views.app_delete),
+    path('v1/apps', apps.list),
+    path('v1/apps/<str:id>', apps.details),
+    path('v1/apps/<str:id>/delete', apps.delete),
 
-    path('v1/credentials', views.credential_list),
-    path('v1/credentials/<str:id>', views.credential_details),
-    path('v1/credentials/<str:id>/delete', views.credential_delete),
+    path('v1/credentials', credentials.list),
+    path('v1/credentials/<str:id>', credentials.details),
+    path('v1/credentials/<str:id>/delete', credentials.delete),
 ]
