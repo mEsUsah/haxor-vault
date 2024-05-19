@@ -1,10 +1,10 @@
-
 import { createApp } from 'vue';
 import { VueReCaptcha} from 'vue-recaptcha-v3'
 import Login from "./Login.vue"
 import Register from "./Register.vue"
 
-const captchaSiteKey = document.querySelector('meta[name="captcha-site-key"]')?.getAttribute('content');
+const captchaSiteKey = document.querySelector('meta[name="captcha-site-key"]')
+    ?.getAttribute('content');
 
 // Login
 const loginMountPoint = document.getElementById("vueUserLogin");

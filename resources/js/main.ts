@@ -31,6 +31,7 @@ if(credentialCreateMountPoint){
     const credentialForm = createApp(CredentialCreate);
     credentialForm.mount(credentialCreateMountPoint);
 }
+
 const credentialDetailMountPoint = document.getElementById("vueCredentialDetails");
 if(credentialDetailMountPoint){
     const credentialDetails = createApp(CredentialDetails);
