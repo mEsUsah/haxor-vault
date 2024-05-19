@@ -1,10 +1,13 @@
-from django.core.mail import send_mail
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
+from django.core.mail import send_mail
+from users.models import User
 
 load_dotenv(override=True)
 
-def send_verification_email(user):
+def send_verification_email(user: User) -> None:
+    """Send a verification email to the user."""
+    
     subject = 'Verify your account'
     recipient_list = [user.email]
     HOST = os.getenv("SITE_HOST")
