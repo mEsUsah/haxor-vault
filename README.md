@@ -1,5 +1,6 @@
 # Vault Haxor
-Simple webapp for storing encrypted credentials
+Simple webapp for storing encrypted credentials using client-side encryption,
+and client-side hasing of password for authentication.
 
 
 # Getting Started
