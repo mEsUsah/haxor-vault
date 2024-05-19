@@ -4,7 +4,7 @@
     "name": "_plugin-vue_export-helper"
   },
   "resources/js/login.ts": {
-    "file": "assets/login-hin7mB3g.js",
+    "file": "assets/login-B3MvmzXf.js",
     "name": "login",
     "src": "resources/js/login.ts",
     "isEntry": true,
@@ -13,7 +13,7 @@
     ]
   },
   "resources/js/main.ts": {
-    "file": "assets/main-DnMVguvJ.js",
+    "file": "assets/main-D6g16ElJ.js",
     "name": "main",
     "src": "resources/js/main.ts",
     "isEntry": true,
