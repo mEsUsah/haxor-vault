@@ -1,5 +1,4 @@
 from django.core.exceptions import ValidationError
-from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -27,9 +26,9 @@ def list(request):
             app.save()
 
             serializer = AppSerializer(app)
-            return JsonResponse(serializer.data, status=201)
+            return Response(serializer.data, status=201)
         else:
-            return JsonResponse({
+            return Response({
                 'message': "validation error",
                 'errors': serializer.errors, 
             }, status=400)
@@ -44,16 +43,16 @@ def details(request, id):
     try:
         app = App.objects.get(pk=id)
     except App.DoesNotExist:
-        return JsonResponse({
+        return Response({
             'message': "Not found",
         }, status=404)
     except ValidationError:
-        return JsonResponse({
+        return Response({
             'message': "invalid UUID",
         }, status=400)
     
     if app.user != request.user:
-        return JsonResponse({
+        return Response({
             'message': "Not yours",
         }, status=403)
 
@@ -69,9 +68,9 @@ def details(request, id):
             app.save()
 
             serializer = AppSerializer(app)
-            return JsonResponse(serializer.data, status=200)
+            return Response(serializer.data, status=200)
         else:
-            return JsonResponse({
+            return Response({
                 'message': "Validation error",
                 'errors': serializer.errors, 
             }, status=400)
@@ -82,25 +81,25 @@ def delete(request, id):
     """
     Delete app.
     """
-    
+
     try:
         app = App.objects.get(pk=id)
     except App.DoesNotExist:
-        return JsonResponse({
+        return Response({
             'message': "Not found",
         }, status=404)
     except ValidationError:
-        return JsonResponse({
+        return Response({
             'message': "invalid UUID",
         }, status=400)
     
     if app.user != request.user:
-        return JsonResponse({
+        return Response({
             'message': "Not yours",
         }, status=403)
    
     if request.method == "POST":
         app.delete()
-        return JsonResponse({
+        return Response({
             'message': "Successfully deleted app",
         }, status=200)
