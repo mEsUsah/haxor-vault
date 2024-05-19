@@ -1,7 +1,7 @@
+import os
+from dotenv import load_dotenv
 from django.contrib import admin
 from django.urls import path, include
-from dotenv import load_dotenv
-import os
 
 load_dotenv(override=True)
 DEBUG = os.getenv("DEBUG", 'False').lower() in ('true', '1', 't')
