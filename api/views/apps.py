@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from vault.serializers import AppSerializer
 from vault.models import App
-from api.forms import AppForm
+from vault.forms import AppForm
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
