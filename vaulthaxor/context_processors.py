@@ -6,6 +6,8 @@ import json
 load_dotenv(override=True)
 
 def export_vars(request):
+    """Export global variables to the frontend."""
+    
     f = open('static/.vite/manifest.json')
     json_data = json.load(f)
     css_file = json_data['resources/scss/main.scss']['file']
