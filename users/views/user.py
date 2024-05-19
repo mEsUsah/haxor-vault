@@ -10,7 +10,7 @@ from users.serializers import UserSerializer
 from users.recaptcha import validate_captcha_token
 from users.send_verification_mail import send_verification_email
 
-def login_user(request):
+def login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -48,7 +48,7 @@ def login_user(request):
 
     return render(request, 'users/login.html')
 
-def register_user(request):
+def register(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
     
@@ -110,11 +110,11 @@ def register_user(request):
 
     return render(request, 'users/register.html')
 
-def logout_user(request):
+def logout(request):
     logout(request)
     return redirect('login')
 
-def verify_user(request, id):
+def verify(request, id):
     context = {
         'status_message': None,
         'status_type': None
