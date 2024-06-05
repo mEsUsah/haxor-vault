@@ -64,6 +64,14 @@ def register(request):
         passwordConfirm = request.POST['passwordConfirm']
         captchaToken = request.POST['captchaToken']
 
+        valid_captcha = validate_captcha_token(captchaToken)
+        if not valid_captcha:
+            return JsonResponse({
+                'message': "Captcha validation failed",
+                "registered": False,
+                "error": "captcha-failed"
+            }, status=400)
+
         try:
             validate_email(email)
         except ValidationError:
@@ -86,15 +94,7 @@ def register(request):
                 "registered": False,
                 "error": "password-mismatch"
             }, status=400)
-        
-        valid_captcha = validate_captcha_token(captchaToken)
-        if not valid_captcha:
-            return JsonResponse({
-                'message': "Captcha validation failed",
-                "registered": False,
-                "error": "captcha-failed"
-            }, status=400)
-            
+         
         form = UserForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
