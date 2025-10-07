@@ -195,6 +195,8 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = 'users.User'
+SESSION_SAVE_EVERY_REQUEST = True  # This keeps "renewing" the session on each visit
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 365  # 1 year in seconds
 
 AUTHENTICATION_BACKENDS = [
     'users.backends.AuthBackend',
