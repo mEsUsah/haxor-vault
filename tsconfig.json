@@ -8,7 +8,30 @@
         "skipLibCheck": true,            // Skip type checking of declaration files
         "noImplicitAny": false,          // Bypass raising errors on `any` type
         "allowImportingTsExtensions": true,
-        "noEmit": true
+        "noEmit": true,
+        "paths": {
+          "@/*": [
+            "./*"
+          ],
+          "@s:rest_framework/*": [
+            "./venv/lib/python3.12/site-packages/rest_framework/static/rest_framework/*"
+          ],
+          "@t:rest_framework/*": [
+            "./venv/lib/python3.12/site-packages/rest_framework/templates/rest_framework/*"
+          ],
+          "@s:corsheaders/*": [
+            "./venv/lib/python3.12/site-packages/corsheaders/static/corsheaders/*"
+          ],
+          "@t:corsheaders/*": [
+            "./venv/lib/python3.12/site-packages/corsheaders/templates/corsheaders/*"
+          ],
+          "@s:storages/*": [
+            "./venv/lib/python3.12/site-packages/storages/static/storages/*"
+          ],
+          "@t:storages/*": [
+            "./venv/lib/python3.12/site-packages/storages/templates/storages/*"
+          ]
+        }
     },
     "include": ["resources/js/*"]  // Frontend paths pattern
 }
