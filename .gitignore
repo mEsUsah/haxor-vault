@@ -5,3 +5,4 @@ venv
 static/assets
 staticfiles
 .hotfile
+*.sql
