@@ -136,25 +136,52 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'vaulthaxor.wsgi.application'
 
-if not DEBUG:
-    LOGGING = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "handlers": {
-            "file-info": {
-                "level": "INFO",
-                "class": "logging.FileHandler",
-                "filename": "/var/log/django/vault.haxor.no/info.log",
-            },
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose-error": {
+            "format": "{asctime} {levelname} {pathname} --> {message}",
+            "style": "{",
         },
-        "loggers": {
-            "django": {
-                "handlers": ["file-info"],
-                "level": "INFO",
-                "propagate": True,
-            },
+        "verbose-info": {
+            "format": "{asctime} {levelname} --> {message}",
+            "style": "{",
         },
-    }
+    },
+    "handlers": {
+        "file-info": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": "/var/log/django/vault.haxor.no/info.log",
+            'formatter': 'verbose-info',
+        },
+        "file-error": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": "/var/log/django/vault.haxor.no/error.log",
+            'formatter': 'verbose-error',
+        },
+        "console-error": {
+            "level": "ERROR",
+            "class": "logging.StreamHandler",
+            'formatter': 'verbose-error',
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file-info"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        "errorlogger": {
+            "handlers": ["file-error", "console-error"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+    },
+}
 
 DATABASES = {
     'default': {
