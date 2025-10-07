@@ -9,8 +9,10 @@ and client-side hasing of password for authentication.
 # Install build essentials (Linux Debian/Ubuntu)
 sudo apt-get install python3-dev python3-venv default-libmysqlclient-dev build-essential pkg-config libxml2-dev
 
-# Setup log directory
+# Setup log directory and files (set correct user as file owner)
 sudo mkdir -p /var/log/django/vault.haxor.no/
+sudo touch /var/log/django/vault.haxor.no/info.log
+sudo touch /var/log/django/vault.haxor.no/error.log
 
 # Install Python dependencies
 python3 -m venv venv
@@ -69,9 +71,10 @@ S3_ACTIVATED=False
 Start services.
 ```bash
 # start python devserver
-python3 devsearch/manage.py runserver
+python3 manage.py runserver
 
 # In separte shell
+# NB! Remember to ativate venv in this shell also.
 npm run dev
 
 # The site will be accessable (with live reload) at http://localhost:8000
